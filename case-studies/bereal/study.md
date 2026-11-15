@@ -21,7 +21,9 @@ on 2026-11-15 (live result in pull request #2):
 ## Method
 
 Pack `weakness_map`: up to 500 most recent US App Store reviews per app, 1-3 star reviews only,
-each labelled with one theme from a fixed list of 14. Shares are counts over each app's sample.
+each given one theme from a fixed list of 14 by the free keyword labeller (word rules, no AI).
+Shares are counts over each app's sample. Keyword labels are rougher than Claude's: read the
+quotes under each number before trusting it.
 
 ## Known limits before running
 
@@ -36,8 +38,8 @@ A 100-review sample per app (pull request #2) shows how uneven the 1-3 star samp
 | Instagram | 67 |
 | Foto | 12 |
 
-At 500 reviews, Locket Widget will likely fall under the pack's 30-review minimum and Foto will
-be close to it. The report flags low samples; treat those two apps as directional.
+Apps under 30 reviews get counts instead of percentages, and apps under 10 have their reviews
+listed without themes. Locket Widget will likely be one of those.
 
 ## Result
 
