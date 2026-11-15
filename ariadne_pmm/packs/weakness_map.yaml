@@ -32,3 +32,21 @@ themes:
   privacy_trust: Privacy worries, permissions, feels like a scam
   content_quality: The content or core output of the app is poor
   other: Does not fit any theme above
+
+# Keyword rules for the free labeller (--tagger keywords). A review gets the theme
+# with the most keyword matches; ties go to the theme listed first; no match is "other".
+# A keyword matches from the start of a word, so "crash" also matches "crashes".
+keywords:
+  pricing_paywall: [subscription, subscribe, paywall, premium, price, pricing, expensive, cost, charge, refund, money, purchase, free trial, billing, pay for, have to pay, paid]
+  ads: [ads, advert, sponsored, commercials]
+  bugs_crashes: [crash, bug, glitch, freez, froze, broken, doesn't work, doesnt work, not working, won't load, wont load, won't open, wont open, error, stopped working, black screen, keeps closing]
+  performance: [slow, lag, battery, storage, takes forever, loading forever, drain, overheat]
+  update_regression: [update, new version, old version, used to, bring back, removed, redesign, ever since, go back to, change it back]
+  missing_feature: [wish, should add, please add, need to add, no option, missing, lacks, would be nice, there's no way, theres no way, let us, allow us]
+  onboarding_setup: [sign up, signup, set up, setup, verification code, tutorial, getting started, create an account, register]
+  ux_confusing: [confusing, hard to use, complicated, hard to find, interface, layout, navigate, cluttered, unintuitive]
+  account_login: [log in, login, logged out, logged me out, password, banned, ban, suspended, locked out, hacked, disabled, my account]
+  sync_data_loss: [lost, deleted, disappeared, sync, backup, erased, streak, all my]
+  customer_support: [support, customer service, no response, no reply, contact, help center, appeal]
+  privacy_trust: [privacy, tracking, scam, creepy, location, permission, spy, unsafe, predator, inappropriate, my data]
+  content_quality: [boring, algorithm, feed, reels, spam, bots, fake, irrelevant, suggested posts, content]
