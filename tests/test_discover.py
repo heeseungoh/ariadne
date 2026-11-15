@@ -3,6 +3,7 @@ from ariadne_pmm.ingest.discover import (
     description_keywords,
     find_competitors,
     resolve_app,
+    short_name,
 )
 
 
@@ -99,3 +100,11 @@ def test_apps_found_by_a_single_search_are_dropped_by_default():
         seed, keywords=["photo sharing"], top=10, session=FakeSession(SEARCHES)
     )
     assert [c.app.name for c in ranked] == ["Locket Widget", "Poparazzi"]
+
+
+def test_short_name_drops_the_store_tagline():
+    assert short_name("BeReal: Photos & Friends Daily") == "BeReal"
+    assert short_name("Discord - Talk, Play, Hang Out") == "Discord"
+    assert short_name("Instants, an Instagram app") == "Instants"
+    assert short_name("Locket Widget") == "Locket Widget"
+    assert short_name("Life360: Family Safety & GPS") == "Life360"
