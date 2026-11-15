@@ -12,6 +12,7 @@ from pathlib import Path
 from ariadne_pmm.analyze.aggregate import build_frame, theme_shares
 from ariadne_pmm.analyze.tagger import DEFAULT_MODEL, tag_reviews
 from ariadne_pmm.ingest.app_store import fetch_reviews
+from ariadne_pmm.ingest.discover import find_competitors, resolve_app
 from ariadne_pmm.models import Review
 from ariadne_pmm.pack import available_packs, load_pack
 from ariadne_pmm.report import render_battlecard
@@ -23,6 +24,27 @@ def parse_app(value: str) -> tuple[str, str]:
     if not app_id.strip().isdigit() or not name.strip():
         raise argparse.ArgumentTypeError(f"'{value}' should look like 6759358792:Shufl FM")
     return app_id.strip(), name.strip()
+
+
+def discover_apps(
+    seed_query: str, keywords: list[str], top: int, country: str, session=None
+) -> list[tuple[str, str]]:
+    """Resolve the seed app, find its competitors, print why each was picked.
+
+    Returns the seed plus competitors as (app_id, name) pairs.
+    """
+    seed = resolve_app(seed_query, country=country, session=session)
+    if seed is None:
+        raise SystemExit(f"Could not find an App Store app matching '{seed_query}'.")
+
+    print(f"Seed: {seed.name} (id {seed.app_id}, {seed.genre}, {seed.rating_count:,} ratings)")
+    competitors = find_competitors(
+        seed, keywords=keywords, top=top, country=country, session=session
+    )
+    for rank, candidate in enumerate(competitors, start=1):
+        app = candidate.app
+        print(f"{rank}. {app.name} (id {app.app_id}): {candidate.reason(seed.genre)}")
+    return [(seed.app_id, seed.name)] + [(c.app.app_id, c.app.name) for c in competitors]
 
 
 def load_reviews_file(path: Path) -> list[Review]:
@@ -70,6 +92,17 @@ def build_parser() -> argparse.ArgumentParser:
 
     commands.add_parser("packs", help="list the built-in research packs")
 
+    discover = commands.add_parser("discover", help="find an app's competitors")
+    discover.add_argument("seed", help="App Store ID or app name, e.g. 1459645446 or BeReal")
+    discover.add_argument(
+        "--keyword",
+        action="append",
+        default=[],
+        help="extra search term for finding competitors (repeatable)",
+    )
+    discover.add_argument("--top", type=int, default=5)
+    discover.add_argument("--country", default="us")
+
     run = commands.add_parser("run", help="run a research pack")
     run.add_argument("pack", help="pack name or path to a pack YAML file")
     run.add_argument(
@@ -80,6 +113,14 @@ def build_parser() -> argparse.ArgumentParser:
         metavar="ID:NAME",
         help="App Store app to pull, e.g. 6759358792:'Shufl FM' (repeatable)",
     )
+    run.add_argument("--seed", help="App Store ID or name: analyse it plus its top competitors")
+    run.add_argument(
+        "--keyword",
+        action="append",
+        default=[],
+        help="extra search term for finding competitors (repeatable)",
+    )
+    run.add_argument("--top", type=int, default=5, help="how many competitors to add to --seed")
     run.add_argument("--reviews-file", type=Path, help="use reviews from a JSON file instead")
     run.add_argument("--country", default="us")
     run.add_argument("--pages", type=int, default=10, help="pages of 50 reviews per app (max 10)")
@@ -97,8 +138,14 @@ def main(argv: list[str] | None = None) -> int:
             print(f"{name}: {load_pack(name).question}")
         return 0
 
-    if not args.app and not args.reviews_file:
-        print("Give at least one --app ID:NAME or a --reviews-file.", file=sys.stderr)
+    if args.command == "discover":
+        discover_apps(args.seed, args.keyword, args.top, args.country)
+        return 0
+
+    if not args.app and not args.seed and not args.reviews_file:
+        print(
+            "Give a --seed app, at least one --app ID:NAME, or a --reviews-file.", file=sys.stderr
+        )
         return 2
     if not os.environ.get("ANTHROPIC_API_KEY"):
         print("Set ANTHROPIC_API_KEY first (console.anthropic.com).", file=sys.stderr)
@@ -107,8 +154,12 @@ def main(argv: list[str] | None = None) -> int:
     if args.reviews_file:
         reviews = load_reviews_file(args.reviews_file)
     else:
+        apps = list(args.app)
+        if args.seed:
+            apps += discover_apps(args.seed, args.keyword, args.top, args.country)
+        apps = list(dict.fromkeys(apps))
         reviews = []
-        for app_id, name in args.app:
+        for app_id, name in apps:
             pulled = fetch_reviews(app_id, name, country=args.country, pages=args.pages)
             print(f"{name}: pulled {len(pulled)} reviews")
             raw = args.data / "raw" / f"{app_id}.json"

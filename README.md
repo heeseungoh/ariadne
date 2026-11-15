@@ -16,12 +16,16 @@ reviews to read, a fixed list of themes, calculations done in code, and a finish
 
 ## How it works
 
-1. **Collect.** Pulls up to about 500 recent App Store reviews per app from Apple's public feed.
-2. **Label.** Claude reads each review and assigns one theme from the pack's fixed list, plus
+1. **Find competitors.** Type one app. Ariadne searches the App Store with its name, its own
+   description keywords and any keywords you add, then ranks what comes back by how many searches
+   found it, whether it shares the genre, and its number of ratings. It prints why each app made
+   the list, so you can drop the ones that don't belong.
+2. **Collect.** Pulls up to about 500 recent App Store reviews per app from Apple's public feed.
+3. **Label.** Claude reads each review and assigns one theme from the pack's fixed list, plus
    the most telling quote.
-3. **Count.** pandas computes every share as a count over a stated sample size. The AI never
+4. **Count.** pandas computes every share as a count over a stated sample size. The AI never
    does arithmetic.
-4. **Report.** Writes a markdown battlecard where each number is followed by the reviews
+5. **Report.** Writes a markdown battlecard where each number is followed by the reviews
    behind it.
 
 ## Why not just ask Claude?
@@ -48,9 +52,15 @@ pip install -e ".[dev]"
 export ANTHROPIC_API_KEY=your-key
 
 ariadne-pmm packs
-ariadne-pmm run weakness_map \
-  --app "1111111111:Competitor A" \
-  --app "2222222222:Competitor B"
+
+# See who Ariadne picks as competitors (free, no API key needed)
+ariadne-pmm discover "BeReal" --keyword "photo sharing" --top 5
+
+# Run the pack on the app plus its top 5 competitors
+ariadne-pmm run weakness_map --seed "BeReal" --keyword "photo sharing" --top 5
+
+# Or name the apps yourself
+ariadne-pmm run weakness_map --app "1111111111:Competitor A" --app "2222222222:Competitor B"
 ```
 
 The app ID is the number in an App Store URL (`apps.apple.com/us/app/name/id1111111111`).
@@ -71,6 +81,8 @@ the question, ratings and themes, and pass its path to `ariadne-pmm run`.
 - Reviews come from existing users with strong opinions. They say little about people who never
   downloaded the app.
 - Apple's feed returns only the most recent ~500 reviews per country.
+- Competitor discovery is a heuristic built on App Store search. It can miss a competitor that
+  doesn't use the same words, or include an app that only shares a keyword. Check the list.
 - The output is a first draft for a marketer to edit, not finished positioning.
 
 ## Roadmap
