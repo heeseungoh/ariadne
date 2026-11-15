@@ -1,12 +1,14 @@
-# Runs the BeReal case study and commits the report to the pull request branch.
-# Uses the free keyword labeller, so it needs no API key and costs nothing.
+# Runs every case study this pull request touches and commits the reports to its branch.
+# A study is a folder in case-studies/ with an args.txt holding the options for
+# `ariadne-pmm run weakness_map`. Uses the free keyword labeller: no API key, no cost.
 # It writes to the branch, so it only runs for branches of this repository, never for forks.
 name: case-study
 
 on:
   pull_request:
     paths:
-      - "case-studies/bereal/study.md"
+      - "case-studies/*/args.txt"
+      - "case-studies/*/study.md"
       - ".github/workflows/case-study.yml"
 
 permissions:
@@ -14,36 +16,44 @@ permissions:
   pull-requests: write
 
 jobs:
-  bereal:
+  run:
     if: github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
     env:
       GH_TOKEN: ${{ github.token }}
       PR_NUMBER: ${{ github.event.pull_request.number }}
       HEAD_REF: ${{ github.head_ref }}
+      BASE_REF: ${{ github.base_ref }}
     steps:
       - uses: actions/checkout@v4
         with:
           ref: ${{ github.head_ref }}
+          fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
       - run: pip install -e .
-      - name: Run the weakness map on BeReal and its top 5 competitors
+      - name: Run the studies changed in this pull request
         run: |
-          ariadne-pmm run weakness_map --seed "BeReal" --keyword "photo sharing" --keyword "friends" \
-            --top 5 --tagger keywords --out case-studies/bereal 2>&1 | tee run.log
-      - name: Commit the report
+          set -o pipefail
+          studies=$(git diff --name-only "origin/$BASE_REF...HEAD" -- case-studies | cut -d/ -f2 | sort -u)
+          for study in $studies; do
+            [ -f "case-studies/$study/args.txt" ] || continue
+            echo "== $study" | tee -a run.log
+            xargs ariadne-pmm run weakness_map --tagger keywords --out "case-studies/$study" \
+              < "case-studies/$study/args.txt" 2>&1 | tee -a run.log
+          done
+      - name: Commit the reports
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add case-studies/bereal/*.md
-          git commit -m "docs: add bereal weakness map report"
+          git add case-studies/*/*.md
+          git diff --cached --quiet || git commit -m "docs: update case study reports"
           git push origin "HEAD:$HEAD_REF"
       - name: Post the run log on the pull request
         if: always()
         run: |
           if [ -f run.log ]; then
-            { echo "### Case study run"; echo '```'; tail -n 30 run.log; echo '```'; } > comment.md
+            { echo "### Case study run"; echo '```'; tail -n 40 run.log; echo '```'; } > comment.md
             gh pr comment "$PR_NUMBER" --repo "$GITHUB_REPOSITORY" --body-file comment.md
           fi
