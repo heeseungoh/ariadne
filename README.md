@@ -80,6 +80,22 @@ which is git-ignored so raw review text is never republished.
 A pack is a YAML file in `ariadne_pmm/packs/`. To add one, copy `weakness_map.yaml`, change
 the question, ratings and themes, and pass its path to `ariadne-pmm run`.
 
+## Two labellers
+
+| | `--tagger claude` (default) | `--tagger keywords` |
+|---|---|---|
+| Cost | A few cents per run, needs `ANTHROPIC_API_KEY` | Free, no key |
+| How it labels | Reads each review for meaning | Counts keyword matches from the pack's rules |
+| Accuracy | Higher | Lower: it matches words, not meaning, and leaves more in "other" |
+| Repeatable | Yes, through the cache | Yes, always |
+
+The report states which labeller was used. Start with `keywords` to see the shape of a market
+for free, then use `claude` for numbers you plan to present.
+
+```bash
+ariadne-pmm run weakness_map --seed "BeReal" --keyword "photo sharing" --tagger keywords
+```
+
 ## Small samples
 
 A percentage on a handful of reviews mostly reflects who happened to write one. So each app is
@@ -107,7 +123,7 @@ check for free, so you can see it before spending API credits.
 ## Roadmap
 
 - [ ] First case study on a real app category
-- [ ] Accuracy check: agreement with 100 hand-labelled reviews
+- [ ] Accuracy check: agreement with 100 hand-labelled reviews, for both labellers
 - [ ] `messaging_miner` pack: what happy users say, in their words
 - [ ] Compare two snapshots over time
 - [ ] Streamlit demo
