@@ -41,3 +41,17 @@ def evidence(frame: pd.DataFrame, app_name: str, theme: str, limit: int = 3) -> 
     rows["has_quote"] = rows["quote"].str.len() > 0
     rows = rows.sort_values(["has_quote", "date"], ascending=[False, False])
     return rows.drop(columns="has_quote").head(limit)
+
+
+def plan_samples(reviews: list[Review], pack: Pack) -> dict[str, tuple[int, str]]:
+    """Per app: how many reviews the pack can read, and which sample tier that allows.
+
+    Covers every app in `reviews`, including apps with nothing in scope, so the
+    plan can be shown before any money is spent on labelling.
+    """
+    counts: dict[str, int] = {}
+    for review in reviews:
+        counts.setdefault(review.app_name, 0)
+        if review.rating in pack.ratings:
+            counts[review.app_name] += 1
+    return {app: (n, pack.sample_tier(n)) for app, n in counts.items()}
