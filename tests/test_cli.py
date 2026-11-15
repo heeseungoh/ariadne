@@ -4,7 +4,7 @@ from types import SimpleNamespace
 
 import pytest
 
-from ariadne_pmm.cli import load_reviews_file, main, parse_app, run_pack
+from ariadne_pmm.cli import discover_apps, load_reviews_file, main, parse_app, run_pack
 from ariadne_pmm.models import Review
 
 
@@ -63,4 +63,27 @@ def test_main_requires_an_input_and_an_api_key(monkeypatch, capsys):
     monkeypatch.delenv("ANTHROPIC_API_KEY", raising=False)
     assert main(["run", "weakness_map"]) == 2
     assert main(["run", "weakness_map", "--app", "123:Demo"]) == 2
+    assert "ANTHROPIC_API_KEY" in capsys.readouterr().err
+
+
+def test_discover_apps_returns_seed_first_and_prints_reasons(capsys):
+    from tests.test_discover import SEARCHES, FakeSession
+
+    apps = discover_apps("1", ["photo sharing"], top=2, country="us", session=FakeSession(SEARCHES))
+    assert apps == [("1", "BeReal"), ("2", "Locket Widget"), ("3", "Poparazzi")]
+    out = capsys.readouterr().out
+    assert "Seed: BeReal (id 1, Social Networking" in out
+    assert "1. Locket Widget (id 2): found by 3 search(es)" in out
+
+
+def test_discover_apps_stops_when_seed_is_unknown():
+    from tests.test_discover import FakeSession
+
+    with pytest.raises(SystemExit, match="Could not find"):
+        discover_apps("999", [], top=3, country="us", session=FakeSession({}))
+
+
+def test_run_accepts_seed_as_input(monkeypatch, capsys):
+    monkeypatch.delenv("ANTHROPIC_API_KEY", raising=False)
+    assert main(["run", "weakness_map", "--seed", "BeReal"]) == 2
     assert "ANTHROPIC_API_KEY" in capsys.readouterr().err
