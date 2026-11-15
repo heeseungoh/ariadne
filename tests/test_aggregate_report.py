@@ -1,4 +1,4 @@
-from ariadne_pmm.analyze.aggregate import build_frame, evidence, theme_shares
+from ariadne_pmm.analyze.aggregate import build_frame, evidence, plan_samples, theme_shares
 from ariadne_pmm.models import Review
 from ariadne_pmm.pack import load_pack
 from ariadne_pmm.report import render_battlecard
@@ -68,6 +68,34 @@ def test_battlecard_shows_numbers_sample_sizes_and_review_ids():
     frame = build_frame(reviews, tags, PACK)
     report = render_battlecard(frame, theme_shares(frame, PACK), PACK, run_date="2026-11-15")
     assert "Alpha (n=3)" in report
-    assert "pricing_paywall: 67% (2 of 3 reviews)" in report
+    assert "pricing_paywall: 2 of 3 reviews" in report
+    assert "67%" not in report  # too few reviews for a percentage
     assert "review 1)" in report
-    assert "Low sample: only 3 reviews" in report
+    assert "Small sample: 3 reviews" in report
+
+
+def test_full_sample_gets_percentages():
+    reviews = [make_review(str(i), "Alpha", 1, "Paywall.") for i in range(24)]
+    reviews += [make_review(str(i), "Alpha", 2, "It crashes.") for i in range(24, 30)]
+    tags = {
+        r.review_id: {
+            "review_id": r.review_id,
+            "theme": "pricing_paywall" if r.rating == 1 else "bugs_crashes",
+            "quote": "",
+        }
+        for r in reviews
+    }
+    frame = build_frame(reviews, tags, PACK)
+    report = render_battlecard(frame, theme_shares(frame, PACK), PACK, run_date="2026-11-15")
+    assert "pricing_paywall: 80% (24 of 30 reviews)" in report
+    assert "| pricing_paywall | 80% |" in report
+    assert "Small sample" not in report
+
+
+def test_plan_samples_covers_every_app_including_empty_ones():
+    reviews = [
+        make_review("1", "Alpha", 1),
+        make_review("2", "Alpha", 5),
+        make_review("3", "Beta", 5),
+    ]
+    assert plan_samples(reviews, PACK) == {"Alpha": (1, "list"), "Beta": (0, "none")}
