@@ -1,0 +1,28 @@
+{
+  "feed": {
+    "entry": [
+      {
+        "author": {"name": {"label": "someuser123"}},
+        "updated": {"label": "2026-10-10T08:15:00-07:00"},
+        "im:rating": {"label": "1"},
+        "im:version": {"label": "1.4.0"},
+        "id": {"label": "1001"},
+        "title": {"label": "What a scam"},
+        "content": {"label": "It used to open offline but now it needs a subscription."}
+      },
+      {
+        "author": {"name": {"label": "anotheruser"}},
+        "updated": {"label": "2026-08-06T11:00:00-07:00"},
+        "im:rating": {"label": "2"},
+        "im:version": {"label": "1.2.1"},
+        "id": {"label": "1002"},
+        "title": {"label": "Too expensive"},
+        "content": {"label": "Ten songs before paying is not enough to judge it."}
+      },
+      {
+        "id": {"label": "app-info"},
+        "title": {"label": "Not a review"}
+      }
+    ]
+  }
+}
