@@ -4,7 +4,14 @@ from types import SimpleNamespace
 
 import pytest
 
-from ariadne_pmm.cli import discover_apps, load_reviews_file, main, parse_app, run_pack
+from ariadne_pmm.cli import (
+    collect_reviews,
+    discover_apps,
+    load_reviews_file,
+    main,
+    parse_app,
+    run_pack,
+)
 from ariadne_pmm.models import Review
 
 
@@ -87,3 +94,24 @@ def test_run_accepts_seed_as_input(monkeypatch, capsys):
     monkeypatch.delenv("ANTHROPIC_API_KEY", raising=False)
     assert main(["run", "weakness_map", "--seed", "BeReal"]) == 2
     assert "ANTHROPIC_API_KEY" in capsys.readouterr().err
+
+
+def test_collect_reviews_saves_raw_pull_and_prints_star_counts(tmp_path, capsys):
+    def fake_fetch(app_id, name, country, pages):
+        return [
+            Review("1", app_id, name, 1, "Bad", "Text", "1.0", "2026-10-01"),
+            Review("2", app_id, name, 1, "Bad", "Text", "1.0", "2026-10-02"),
+            Review("3", app_id, name, 5, "Good", "Text", "1.0", "2026-10-03"),
+        ]
+
+    reviews = collect_reviews([("9", "Alpha")], "us", 1, tmp_path, fetch=fake_fetch)
+    assert len(reviews) == 3
+    assert (tmp_path / "raw" / "9.json").exists()
+    out = capsys.readouterr().out
+    assert "Alpha: pulled 3 reviews (1 star: 2, 2 star: 0, 3 star: 0, 4 star: 0, 5 star: 1)" in out
+
+
+def test_fetch_needs_an_app_but_no_api_key(monkeypatch, capsys):
+    monkeypatch.delenv("ANTHROPIC_API_KEY", raising=False)
+    assert main(["fetch"]) == 2
+    assert "ANTHROPIC_API_KEY" not in capsys.readouterr().err

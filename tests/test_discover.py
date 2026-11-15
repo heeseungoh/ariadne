@@ -3,6 +3,7 @@ from ariadne_pmm.ingest.discover import (
     description_keywords,
     find_competitors,
     resolve_app,
+    short_name,
 )
 
 
@@ -67,7 +68,7 @@ def test_description_keywords_skip_stopwords():
 def test_competitors_rank_by_hits_genre_and_size_and_exclude_seed():
     seed = resolve_app("1", session=FakeSession({}))
     ranked = find_competitors(
-        seed, keywords=["photo sharing"], top=10, session=FakeSession(SEARCHES)
+        seed, keywords=["photo sharing"], top=10, session=FakeSession(SEARCHES), min_hits=1
     )
     names = [c.app.name for c in ranked]
     assert "BeReal" not in names
@@ -88,6 +89,22 @@ def test_reason_explains_the_ranking():
 def test_each_query_runs_once_and_top_limits_results():
     seed = AppInfo("1", "BeReal", "Social Networking", 0, 0.0, "Seller", "real real")
     session = FakeSession(SEARCHES)
-    ranked = find_competitors(seed, keywords=["BeReal", "real"], top=2, session=session)
+    ranked = find_competitors(seed, keywords=["BeReal", "real"], top=2, session=session, min_hits=1)
     assert session.terms == ["BeReal", "real"]
     assert len(ranked) == 2
+
+
+def test_apps_found_by_a_single_search_are_dropped_by_default():
+    seed = resolve_app("1", session=FakeSession({}))
+    ranked = find_competitors(
+        seed, keywords=["photo sharing"], top=10, session=FakeSession(SEARCHES)
+    )
+    assert [c.app.name for c in ranked] == ["Locket Widget", "Poparazzi"]
+
+
+def test_short_name_drops_the_store_tagline():
+    assert short_name("BeReal: Photos & Friends Daily") == "BeReal"
+    assert short_name("Discord - Talk, Play, Hang Out") == "Discord"
+    assert short_name("Instants, an Instagram app") == "Instants"
+    assert short_name("Locket Widget") == "Locket Widget"
+    assert short_name("Life360: Family Safety & GPS") == "Life360"
