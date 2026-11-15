@@ -10,12 +10,12 @@ from collections import Counter
 from datetime import datetime, timezone
 from pathlib import Path
 
-from ariadne_pmm.analyze.aggregate import build_frame, theme_shares
+from ariadne_pmm.analyze.aggregate import build_frame, plan_samples, theme_shares
 from ariadne_pmm.analyze.tagger import DEFAULT_MODEL, tag_reviews
 from ariadne_pmm.ingest.app_store import fetch_reviews
 from ariadne_pmm.ingest.discover import find_competitors, resolve_app, short_name
 from ariadne_pmm.models import Review
-from ariadne_pmm.pack import available_packs, load_pack
+from ariadne_pmm.pack import Pack, available_packs, load_pack
 from ariadne_pmm.report import render_battlecard
 
 
@@ -70,6 +70,24 @@ def load_reviews_file(path: Path) -> list[Review]:
     return [Review(**row) for row in json.loads(path.read_text())]
 
 
+PLAN_NOTES = {
+    "none": "nothing to analyse, left out",
+    "list": "too few to rank themes, reviews will be listed and not labelled",
+    "counts": "small sample, counts only",
+    "full": "full percentages",
+}
+
+
+def print_sample_plan(reviews: list[Review], pack: Pack) -> dict[str, tuple[int, str]]:
+    """Show, per app, how many reviews the pack can read and what that sample allows."""
+    plan = plan_samples(reviews, pack)
+    stars = f"{min(pack.ratings)}-{max(pack.ratings)} star"
+    print(f"Sample check for pack '{pack.name}' ({stars} reviews):")
+    for app, (n, tier) in plan.items():
+        print(f"  {app}: {n} reviews: {PLAN_NOTES[tier]}")
+    return plan
+
+
 def run_pack(
     pack_name: str,
     reviews: list[Review],
@@ -79,19 +97,26 @@ def run_pack(
     model: str = DEFAULT_MODEL,
     run_date: str | None = None,
 ) -> Path:
-    """Tag, count and write the report. Returns the report path."""
+    """Check samples, tag, count and write the report. Returns the report path.
+
+    Only apps with enough reviews to rank themes are sent for labelling.
+    """
     pack = load_pack(pack_name)
     run_date = run_date or datetime.now(tz=timezone.utc).date().isoformat()
+    plan = print_sample_plan(reviews, pack)
     in_scope = [r for r in reviews if r.rating in pack.ratings]
+    to_tag = [r for r in in_scope if plan[r.app_name][1] in ("counts", "full")]
+    listed = [r for r in in_scope if plan[r.app_name][1] == "list"]
+    empty_apps = [app for app, (_, tier) in plan.items() if tier == "none"]
 
     tags = tag_reviews(
-        in_scope,
+        to_tag,
         pack,
         client,
         cache_path=data_dir / "cache" / f"{pack.cache_key}.jsonl",
         model=model,
     )
-    frame = build_frame(in_scope, tags, pack)
+    frame = build_frame(to_tag, tags, pack)
     shares = theme_shares(frame, pack)
 
     # The snapshot holds raw review text, so it stays in the git-ignored data folder.
@@ -101,7 +126,11 @@ def run_pack(
 
     report = out_dir / f"{pack.name}-{run_date}.md"
     report.parent.mkdir(parents=True, exist_ok=True)
-    report.write_text(render_battlecard(frame, shares, pack, run_date=run_date))
+    report.write_text(
+        render_battlecard(
+            frame, shares, pack, run_date=run_date, listed=listed, empty_apps=empty_apps
+        )
+    )
     return report
 
 
@@ -124,6 +153,7 @@ def build_parser() -> argparse.ArgumentParser:
 
     fetch = commands.add_parser("fetch", help="pull reviews and show counts, without labelling")
     _add_source_arguments(fetch)
+    fetch.add_argument("--pack", default="weakness_map", help="pack to check sample sizes for")
 
     run = commands.add_parser("run", help="run a research pack")
     run.add_argument("pack", help="pack name or path to a pack YAML file")
@@ -182,7 +212,8 @@ def main(argv: list[str] | None = None) -> int:
         return 2
 
     if args.command == "fetch":
-        collect_reviews(_selected_apps(args), args.country, args.pages, args.data)
+        pulled = collect_reviews(_selected_apps(args), args.country, args.pages, args.data)
+        print_sample_plan(pulled, load_pack(args.pack))
         return 0
 
     if not os.environ.get("ANTHROPIC_API_KEY"):
