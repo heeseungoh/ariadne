@@ -18,7 +18,8 @@ reviews to read, a fixed list of themes, calculations done in code, and a finish
 
 1. **Find competitors.** Type one app. Ariadne searches the App Store with its name, its own
    description keywords and any keywords you add, then ranks what comes back by how many searches
-   found it, whether it shares the genre, and its number of ratings. It prints why each app made
+   found it, whether it shares the genre, and its number of ratings. An app has to be found by
+   at least two searches to count. It prints why each app made
    the list, so you can drop the ones that don't belong.
 2. **Collect.** Pulls up to about 500 recent App Store reviews per app from Apple's public feed.
 3. **Label.** Claude reads each review and assigns one theme from the pack's fixed list, plus
@@ -55,6 +56,9 @@ ariadne-pmm packs
 
 # See who Ariadne picks as competitors (free, no API key needed)
 ariadne-pmm discover "BeReal" --keyword "photo sharing" --top 5
+
+# Pull the reviews and see counts by star rating (free, no API key needed)
+ariadne-pmm fetch --seed "BeReal" --keyword "photo sharing" --top 5
 
 # Run the pack on the app plus its top 5 competitors
 ariadne-pmm run weakness_map --seed "BeReal" --keyword "photo sharing" --top 5
