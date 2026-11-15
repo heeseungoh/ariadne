@@ -1,11 +1,15 @@
-# positioning-lab
+# Ariadne
 
-Turn customer reviews into product positioning you can defend in a room.
+**Customer evidence you can defend.**
 
-Product marketing is full of ambiguous questions: where are competitors weak, what do users
-actually value, is the price the problem? positioning-lab answers them with **research packs**.
-A pack is one PMM question with a fixed recipe: which reviews to read, a fixed list of themes,
-calculations done in code, and a finished deliverable.
+In Greek myth, Ariadne gave Theseus a clew, a ball of thread, so he could find his way out of
+the Labyrinth. It is where the English word "clue" comes from. Product marketing is a labyrinth
+of ambiguous questions: where are competitors weak, what do users actually value, is the price
+the problem? Ariadne is the thread: it turns customer reviews into positioning backed by
+numbers you can trace to the reviews behind them.
+
+It does this with **research packs**. A pack is one PMM question with a fixed recipe: which
+reviews to read, a fixed list of themes, calculations done in code, and a finished deliverable.
 
 > Status: early build. One pack works end to end. No case study or accuracy check has been
 > run yet. See [Roadmap](#roadmap).
@@ -22,10 +26,10 @@ calculations done in code, and a finished deliverable.
 
 ## Why not just ask Claude?
 
-For a one-time look at a handful of reviews, ask Claude. This tool is for when you have to
+For a one-time look at a handful of reviews, ask Claude. Ariadne is for when you have to
 defend the numbers to someone else.
 
-| | Asking Claude in a chat | positioning-lab |
+| | Asking Claude in a chat | Ariadne |
 |---|---|---|
 | Data volume | Whatever you paste in | About 500 reviews per app, pulled automatically |
 | Numbers | Estimated by reading | Counted in code, sample size shown |
@@ -43,8 +47,8 @@ chat is better for follow-up questions.
 pip install -e ".[dev]"
 export ANTHROPIC_API_KEY=your-key
 
-positioning-lab packs
-positioning-lab run weakness_map \
+ariadne-pmm packs
+ariadne-pmm run weakness_map \
   --app "1111111111:Competitor A" \
   --app "2222222222:Competitor B"
 ```
@@ -59,8 +63,8 @@ which is git-ignored so raw review text is never republished.
 |---|---|---|
 | `weakness_map` | Where is each competitor losing users? | Battlecard per competitor |
 
-A pack is a YAML file in `positioning_lab/packs/`. To add one, copy `weakness_map.yaml`, change
-the question, ratings and themes, and pass its path to `positioning-lab run`.
+A pack is a YAML file in `ariadne_pmm/packs/`. To add one, copy `weakness_map.yaml`, change
+the question, ratings and themes, and pass its path to `ariadne-pmm run`.
 
 ## Limits
 

@@ -1,9 +1,9 @@
 import json
 from types import SimpleNamespace
 
-from positioning_lab.analyze.tagger import tag_reviews
-from positioning_lab.models import Review
-from positioning_lab.pack import load_pack
+from ariadne_pmm.analyze.tagger import tag_reviews
+from ariadne_pmm.models import Review
+from ariadne_pmm.pack import load_pack
 
 PACK = load_pack("weakness_map")
 

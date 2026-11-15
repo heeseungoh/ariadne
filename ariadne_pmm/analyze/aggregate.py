@@ -4,8 +4,8 @@ from __future__ import annotations
 
 import pandas as pd
 
-from positioning_lab.models import Review
-from positioning_lab.pack import Pack
+from ariadne_pmm.models import Review
+from ariadne_pmm.pack import Pack
 
 
 def build_frame(reviews: list[Review], tags: dict[str, dict], pack: Pack) -> pd.DataFrame:

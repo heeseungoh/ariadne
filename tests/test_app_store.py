@@ -1,7 +1,7 @@
 import json
 from pathlib import Path
 
-from positioning_lab.ingest.app_store import fetch_reviews, parse_feed
+from ariadne_pmm.ingest.app_store import fetch_reviews, parse_feed
 
 FIXTURE = json.loads((Path(__file__).parent / "fixtures" / "app_store_page.json").read_text())
 

@@ -4,8 +4,8 @@ from types import SimpleNamespace
 
 import pytest
 
-from positioning_lab.cli import load_reviews_file, main, parse_app, run_pack
-from positioning_lab.models import Review
+from ariadne_pmm.cli import load_reviews_file, main, parse_app, run_pack
+from ariadne_pmm.models import Review
 
 
 class FakeClient:
