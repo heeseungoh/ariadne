@@ -80,6 +80,21 @@ which is git-ignored so raw review text is never republished.
 A pack is a YAML file in `ariadne_pmm/packs/`. To add one, copy `weakness_map.yaml`, change
 the question, ratings and themes, and pass its path to `ariadne-pmm run`.
 
+## Small samples
+
+A percentage on a handful of reviews mostly reflects who happened to write one. So each app is
+checked before anything is labelled, and the report only claims what the sample supports:
+
+| Reviews the pack can read | What the report shows |
+|---|---|
+| 0 | The app is left out, and the report says so |
+| 1 to 9 | The reviews themselves, with no themes. They are not sent for labelling |
+| 10 to 29 | Counts only ("4 of 17"), marked as directional |
+| 30 or more | Full percentages |
+
+The two cut-offs are set per pack (`min_reviews`, `min_sample`). `ariadne-pmm fetch` prints this
+check for free, so you can see it before spending API credits.
+
 ## Limits
 
 - Reviews come from existing users with strong opinions. They say little about people who never
