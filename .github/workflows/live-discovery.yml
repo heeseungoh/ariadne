@@ -6,6 +6,7 @@ on:
   pull_request:
     paths:
       - "ariadne_pmm/ingest/discover.py"
+      - "ariadne_pmm/ingest/app_store.py"
       - "ariadne_pmm/cli.py"
       - ".github/workflows/live-discovery.yml"
 
@@ -28,6 +29,10 @@ jobs:
             echo "### Live discovery: BeReal"
             echo '```'
             ariadne-pmm discover "BeReal" --keyword "photo sharing" --keyword "friends" --top 10 2>&1
+            echo '```'
+            echo "### Live review feed: BeReal and its top 5 (first 2 pages each)"
+            echo '```'
+            ariadne-pmm fetch --seed "BeReal" --keyword "photo sharing" --keyword "friends" --top 5 --pages 2 2>&1 | grep "pulled"
             echo '```'
           } > discovery.md
           cat discovery.md

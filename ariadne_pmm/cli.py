@@ -6,13 +6,14 @@ import argparse
 import json
 import os
 import sys
+from collections import Counter
 from datetime import datetime, timezone
 from pathlib import Path
 
 from ariadne_pmm.analyze.aggregate import build_frame, theme_shares
 from ariadne_pmm.analyze.tagger import DEFAULT_MODEL, tag_reviews
 from ariadne_pmm.ingest.app_store import fetch_reviews
-from ariadne_pmm.ingest.discover import find_competitors, resolve_app
+from ariadne_pmm.ingest.discover import find_competitors, resolve_app, short_name
 from ariadne_pmm.models import Review
 from ariadne_pmm.pack import available_packs, load_pack
 from ariadne_pmm.report import render_battlecard
@@ -44,7 +45,25 @@ def discover_apps(
     for rank, candidate in enumerate(competitors, start=1):
         app = candidate.app
         print(f"{rank}. {app.name} (id {app.app_id}): {candidate.reason(seed.genre)}")
-    return [(seed.app_id, seed.name)] + [(c.app.app_id, c.app.name) for c in competitors]
+    apps = [seed, *(c.app for c in competitors)]
+    return [(app.app_id, short_name(app.name)) for app in apps]
+
+
+def collect_reviews(
+    apps: list[tuple[str, str]], country: str, pages: int, data_dir: Path, fetch=fetch_reviews
+) -> list[Review]:
+    """Pull reviews for each app, save the raw pull locally, and print counts by star rating."""
+    reviews: list[Review] = []
+    for app_id, name in apps:
+        pulled = fetch(app_id, name, country=country, pages=pages)
+        stars = Counter(r.rating for r in pulled)
+        by_star = ", ".join(f"{star} star: {stars.get(star, 0)}" for star in range(1, 6))
+        print(f"{name}: pulled {len(pulled)} reviews ({by_star})")
+        raw = data_dir / "raw" / f"{app_id}.json"
+        raw.parent.mkdir(parents=True, exist_ok=True)
+        raw.write_text(json.dumps([r.to_dict() for r in pulled], indent=2))
+        reviews.extend(pulled)
+    return reviews
 
 
 def load_reviews_file(path: Path) -> list[Review]:
@@ -103,9 +122,21 @@ def build_parser() -> argparse.ArgumentParser:
     discover.add_argument("--top", type=int, default=5)
     discover.add_argument("--country", default="us")
 
+    fetch = commands.add_parser("fetch", help="pull reviews and show counts, without labelling")
+    _add_source_arguments(fetch)
+
     run = commands.add_parser("run", help="run a research pack")
     run.add_argument("pack", help="pack name or path to a pack YAML file")
-    run.add_argument(
+    _add_source_arguments(run)
+    run.add_argument("--reviews-file", type=Path, help="use reviews from a JSON file instead")
+    run.add_argument("--model", default=DEFAULT_MODEL)
+    run.add_argument("--out", type=Path, default=Path("reports"))
+    return parser
+
+
+def _add_source_arguments(command: argparse.ArgumentParser) -> None:
+    """Options shared by every command that pulls reviews."""
+    command.add_argument(
         "--app",
         action="append",
         type=parse_app,
@@ -113,21 +144,24 @@ def build_parser() -> argparse.ArgumentParser:
         metavar="ID:NAME",
         help="App Store app to pull, e.g. 6759358792:'Shufl FM' (repeatable)",
     )
-    run.add_argument("--seed", help="App Store ID or name: analyse it plus its top competitors")
-    run.add_argument(
+    command.add_argument("--seed", help="App Store ID or name: use it plus its top competitors")
+    command.add_argument(
         "--keyword",
         action="append",
         default=[],
         help="extra search term for finding competitors (repeatable)",
     )
-    run.add_argument("--top", type=int, default=5, help="how many competitors to add to --seed")
-    run.add_argument("--reviews-file", type=Path, help="use reviews from a JSON file instead")
-    run.add_argument("--country", default="us")
-    run.add_argument("--pages", type=int, default=10, help="pages of 50 reviews per app (max 10)")
-    run.add_argument("--model", default=DEFAULT_MODEL)
-    run.add_argument("--out", type=Path, default=Path("reports"))
-    run.add_argument("--data", type=Path, default=Path("data"))
-    return parser
+    command.add_argument("--top", type=int, default=5, help="competitors to add to --seed")
+    command.add_argument("--country", default="us")
+    command.add_argument("--pages", type=int, default=10, help="pages of 50 reviews per app")
+    command.add_argument("--data", type=Path, default=Path("data"))
+
+
+def _selected_apps(args: argparse.Namespace) -> list[tuple[str, str]]:
+    apps = list(args.app)
+    if args.seed:
+        apps += discover_apps(args.seed, args.keyword, args.top, args.country)
+    return list(dict.fromkeys(apps))
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -142,30 +176,23 @@ def main(argv: list[str] | None = None) -> int:
         discover_apps(args.seed, args.keyword, args.top, args.country)
         return 0
 
-    if not args.app and not args.seed and not args.reviews_file:
-        print(
-            "Give a --seed app, at least one --app ID:NAME, or a --reviews-file.", file=sys.stderr
-        )
+    reviews_file = getattr(args, "reviews_file", None)
+    if not args.app and not args.seed and not reviews_file:
+        print("Give a --seed app or at least one --app ID:NAME.", file=sys.stderr)
         return 2
+
+    if args.command == "fetch":
+        collect_reviews(_selected_apps(args), args.country, args.pages, args.data)
+        return 0
+
     if not os.environ.get("ANTHROPIC_API_KEY"):
         print("Set ANTHROPIC_API_KEY first (console.anthropic.com).", file=sys.stderr)
         return 2
 
-    if args.reviews_file:
-        reviews = load_reviews_file(args.reviews_file)
+    if reviews_file:
+        reviews = load_reviews_file(reviews_file)
     else:
-        apps = list(args.app)
-        if args.seed:
-            apps += discover_apps(args.seed, args.keyword, args.top, args.country)
-        apps = list(dict.fromkeys(apps))
-        reviews = []
-        for app_id, name in apps:
-            pulled = fetch_reviews(app_id, name, country=args.country, pages=args.pages)
-            print(f"{name}: pulled {len(pulled)} reviews")
-            raw = args.data / "raw" / f"{app_id}.json"
-            raw.parent.mkdir(parents=True, exist_ok=True)
-            raw.write_text(json.dumps([r.to_dict() for r in pulled], indent=2))
-            reviews.extend(pulled)
+        reviews = collect_reviews(_selected_apps(args), args.country, args.pages, args.data)
 
     import anthropic  # imported here so listing packs works without the SDK configured
 

@@ -65,6 +65,12 @@ class Candidate:
         return "; ".join(parts)
 
 
+def short_name(name: str) -> str:
+    """Drop the store tagline: 'BeReal: Photos & Friends Daily' becomes 'BeReal'."""
+    head = re.split(r":\s|\s[-–—|]\s|,\s", name.strip(), maxsplit=1)[0].strip()
+    return head or name.strip()
+
+
 def _to_app(item: dict) -> AppInfo:
     return AppInfo(
         app_id=str(item.get("trackId", "")),
@@ -126,8 +132,15 @@ def find_competitors(
     top: int = 5,
     country: str = "us",
     session=None,
+    min_hits: int = 2,
 ) -> list[Candidate]:
-    """Return the top competitors to the seed app, best first."""
+    """Return the top competitors to the seed app, best first.
+
+    An app must be found by at least `min_hits` different searches. One search
+    alone lets in big apps that only share a keyword (a live run for BeReal let
+    in Facebook, Discord and Life360 this way). Fewer than `top` apps may come
+    back: a short honest list beats a padded one.
+    """
     http = session or requests.Session()
     queries = [seed.name, *(keywords or []), *description_keywords(seed.description)]
     queries = list(dict.fromkeys(q.strip() for q in queries if q and q.strip()))
@@ -146,4 +159,5 @@ def find_competitors(
                 candidate.query_hits += 1
                 candidate.matched_queries.append(query)
 
-    return score_candidates(seed, candidates)[:top]
+    ranked = [c for c in score_candidates(seed, candidates) if c.query_hits >= min_hits]
+    return ranked[:top]
