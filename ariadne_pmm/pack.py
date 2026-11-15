@@ -18,8 +18,19 @@ class Pack:
     question: str
     deliverable: str
     ratings: tuple[int, ...]
+    min_reviews: int
     min_sample: int
     themes: dict[str, str]
+
+    def sample_tier(self, n: int) -> str:
+        """How much an app's sample of n reviews can support: none, list, counts or full."""
+        if n <= 0:
+            return "none"
+        if n < self.min_reviews:
+            return "list"
+        if n < self.min_sample:
+            return "counts"
+        return "full"
 
     @property
     def cache_key(self) -> str:
@@ -56,6 +67,7 @@ def load_pack(name_or_path: str) -> Pack:
         question=raw["question"],
         deliverable=raw.get("deliverable", "report"),
         ratings=ratings,
+        min_reviews=int(raw.get("min_reviews", 10)),
         min_sample=int(raw.get("min_sample", 30)),
         themes=themes,
     )
