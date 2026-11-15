@@ -34,11 +34,22 @@ def test_parse_app():
         parse_app("Shufl FM")
 
 
-def test_run_pack_end_to_end(tmp_path):
-    reviews = [
-        Review("1", "9", "Alpha", 1, "Bad", "Hit a paywall at once.", "1.0", "2026-10-01"),
-        Review("2", "9", "Alpha", 5, "Great", "Love it.", "1.0", "2026-10-02"),
+def bulk(app, count, rating, start):
+    return [
+        Review(
+            str(start + i), app, app, rating, "Bad", "Hit a paywall at once.", "1.0", "2026-10-01"
+        )
+        for i in range(count)
     ]
+
+
+def test_run_pack_end_to_end(tmp_path, capsys):
+    reviews = (
+        bulk("Alpha", 30, 1, 1000)  # enough for percentages
+        + bulk("Beta", 12, 2, 2000)  # counts only
+        + bulk("Gamma", 1, 1, 3000)  # the one-review app: listed, never labelled
+        + bulk("Delta", 4, 5, 4000)  # nothing the pack reads
+    )
     report = run_pack(
         "weakness_map",
         reviews,
@@ -49,9 +60,21 @@ def test_run_pack_end_to_end(tmp_path):
     )
     text = report.read_text()
     assert report.name == "weakness_map-2026-11-15.md"
-    assert "pricing_paywall: 100% (1 of 1 reviews)" in text
+    assert "pricing_paywall: 100% (30 of 30 reviews)" in text
+    assert "pricing_paywall: 12 of 12 reviews" in text
+    assert "Small sample: 12 reviews" in text
+    assert "Too few reviews to rank themes: 1 (minimum 10)" in text
+    assert "review 3000)" in text
+    assert "No 1-3 star reviews were found for: Delta." in text
+
+    cache = (tmp_path / "data" / "cache" / "weakness_map-v1.jsonl").read_text()
+    assert '"3000"' not in cache  # the one-review app cost nothing to label
+    assert len(cache.splitlines()) == 42
     assert (tmp_path / "data" / "snapshots" / "weakness_map-2026-11-15.csv").exists()
-    assert (tmp_path / "data" / "cache" / "weakness_map-v1.jsonl").exists()
+
+    out = capsys.readouterr().out
+    assert "Gamma: 1 reviews: too few to rank themes" in out
+    assert "Delta: 0 reviews: nothing to analyse, left out" in out
 
 
 def test_reviews_file_round_trip(tmp_path):
