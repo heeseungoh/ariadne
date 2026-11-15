@@ -65,6 +65,12 @@ class Candidate:
         return "; ".join(parts)
 
 
+def short_name(name: str) -> str:
+    """Drop the store tagline: 'BeReal: Photos & Friends Daily' becomes 'BeReal'."""
+    head = re.split(r":\s|\s[-–—|]\s|,\s", name.strip(), maxsplit=1)[0].strip()
+    return head or name.strip()
+
+
 def _to_app(item: dict) -> AppInfo:
     return AppInfo(
         app_id=str(item.get("trackId", "")),
