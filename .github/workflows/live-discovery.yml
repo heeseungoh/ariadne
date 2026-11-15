@@ -30,9 +30,9 @@ jobs:
             echo '```'
             ariadne-pmm discover "BeReal" --keyword "photo sharing" --keyword "friends" --top 10 2>&1
             echo '```'
-            echo "### Live review feed: BeReal and its top 5 (first 2 pages each)"
+            echo "### Live review feed and sample check: BeReal and its top 5 (first 2 pages each)"
             echo '```'
-            ariadne-pmm fetch --seed "BeReal" --keyword "photo sharing" --keyword "friends" --top 5 --pages 2 2>&1 | grep "pulled"
+            ariadne-pmm fetch --seed "BeReal" --keyword "photo sharing" --keyword "friends" --top 5 --pages 2 2>&1 | grep -E "pulled|Sample check|reviews:"
             echo '```'
           } > discovery.md
           cat discovery.md
