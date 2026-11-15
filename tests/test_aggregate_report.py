@@ -1,7 +1,7 @@
-from positioning_lab.analyze.aggregate import build_frame, evidence, theme_shares
-from positioning_lab.models import Review
-from positioning_lab.pack import load_pack
-from positioning_lab.report import render_battlecard
+from ariadne_pmm.analyze.aggregate import build_frame, evidence, theme_shares
+from ariadne_pmm.models import Review
+from ariadne_pmm.pack import load_pack
+from ariadne_pmm.report import render_battlecard
 
 PACK = load_pack("weakness_map")
 
