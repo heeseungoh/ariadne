@@ -9,12 +9,12 @@ import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
-from positioning_lab.analyze.aggregate import build_frame, theme_shares
-from positioning_lab.analyze.tagger import DEFAULT_MODEL, tag_reviews
-from positioning_lab.ingest.app_store import fetch_reviews
-from positioning_lab.models import Review
-from positioning_lab.pack import available_packs, load_pack
-from positioning_lab.report import render_battlecard
+from ariadne_pmm.analyze.aggregate import build_frame, theme_shares
+from ariadne_pmm.analyze.tagger import DEFAULT_MODEL, tag_reviews
+from ariadne_pmm.ingest.app_store import fetch_reviews
+from ariadne_pmm.models import Review
+from ariadne_pmm.pack import available_packs, load_pack
+from ariadne_pmm.report import render_battlecard
 
 
 def parse_app(value: str) -> tuple[str, str]:
@@ -65,7 +65,7 @@ def run_pack(
 
 
 def build_parser() -> argparse.ArgumentParser:
-    parser = argparse.ArgumentParser(prog="positioning-lab", description=__doc__)
+    parser = argparse.ArgumentParser(prog="ariadne-pmm", description=__doc__)
     commands = parser.add_subparsers(dest="command", required=True)
 
     commands.add_parser("packs", help="list the built-in research packs")

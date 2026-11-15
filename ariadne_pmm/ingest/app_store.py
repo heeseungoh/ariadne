@@ -10,7 +10,7 @@ import time
 
 import requests
 
-from positioning_lab.models import Review
+from ariadne_pmm.models import Review
 
 FEED_URL = (
     "https://itunes.apple.com/{country}/rss/customerreviews/"

@@ -6,8 +6,8 @@ from datetime import datetime, timezone
 
 import pandas as pd
 
-from positioning_lab.analyze.aggregate import evidence
-from positioning_lab.pack import FALLBACK_THEME, Pack
+from ariadne_pmm.analyze.aggregate import evidence
+from ariadne_pmm.pack import FALLBACK_THEME, Pack
 
 
 def _pct(value: float) -> str:

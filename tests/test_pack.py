@@ -1,6 +1,6 @@
 import pytest
 
-from positioning_lab.pack import available_packs, load_pack
+from ariadne_pmm.pack import available_packs, load_pack
 
 
 def test_weakness_map_pack_loads():

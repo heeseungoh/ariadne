@@ -13,8 +13,8 @@ import json
 import re
 from pathlib import Path
 
-from positioning_lab.models import Review
-from positioning_lab.pack import FALLBACK_THEME, Pack
+from ariadne_pmm.models import Review
+from ariadne_pmm.pack import FALLBACK_THEME, Pack
 
 DEFAULT_MODEL = "claude-haiku-5-5"
 BATCH_SIZE = 20

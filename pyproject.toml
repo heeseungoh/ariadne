@@ -3,9 +3,9 @@ requires = ["setuptools>=68"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "positioning-lab"
+name = "ariadne-pmm"
 version = "0.1.0"
-description = "Turn customer reviews into defensible product positioning."
+description = "Ariadne: turn customer reviews into product positioning you can defend."
 requires-python = ">=3.10"
 dependencies = [
     "anthropic>=0.40",
@@ -18,13 +18,13 @@ dependencies = [
 dev = ["pytest>=8.0", "ruff>=0.5"]
 
 [project.scripts]
-positioning-lab = "positioning_lab.cli:main"
+ariadne-pmm = "ariadne_pmm.cli:main"
 
 [tool.setuptools.packages.find]
-include = ["positioning_lab*"]
+include = ["ariadne_pmm*"]
 
 [tool.setuptools.package-data]
-positioning_lab = ["packs/*.yaml"]
+ariadne_pmm = ["packs/*.yaml"]
 
 [tool.ruff]
 line-length = 100
