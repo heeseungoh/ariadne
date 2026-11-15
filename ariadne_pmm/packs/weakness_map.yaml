@@ -8,7 +8,11 @@ deliverable: battlecard
 # Which reviews this pack reads.
 ratings: [1, 2, 3]
 
-# Shares computed on fewer reviews than this are flagged as low sample.
+# Sample-size rules, per app, counted on the reviews this pack reads:
+#   fewer than min_reviews  -> no themes at all, the reviews are just listed (and not labelled)
+#   fewer than min_sample   -> counts only ("4 of 17"), marked as directional
+#   min_sample or more      -> full percentages
+min_reviews: 10
 min_sample: 30
 
 # Fixed theme list. Every review gets exactly one primary theme from this list,
