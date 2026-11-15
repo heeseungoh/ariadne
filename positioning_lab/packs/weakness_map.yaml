@@ -1,0 +1,30 @@
+# Research pack: competitor weakness map
+# Each pack is one PMM question with a fixed recipe, so every run is comparable.
+name: weakness_map
+version: 1
+question: Where is each competitor losing users?
+deliverable: battlecard
+
+# Which reviews this pack reads.
+ratings: [1, 2, 3]
+
+# Shares computed on fewer reviews than this are flagged as low sample.
+min_sample: 30
+
+# Fixed theme list. Every review gets exactly one primary theme from this list,
+# which is what lets results add up and compare across apps and across runs.
+themes:
+  pricing_paywall: Price, subscription, paywall, free-tier limits, feeling charged unfairly
+  ads: Too many ads or intrusive ads
+  bugs_crashes: Crashes, freezes, features that do not work
+  performance: Slow, laggy, battery or storage drain
+  update_regression: A recent update removed something or made the app worse
+  missing_feature: A feature the user wants that the app does not have
+  onboarding_setup: Hard to get started, sign up, import data, or reach first value
+  ux_confusing: Confusing navigation or design, hard to find things
+  account_login: Login, password, verification or account access problems
+  sync_data_loss: Lost data, sync failures, backup problems
+  customer_support: Support is slow, unhelpful or unreachable
+  privacy_trust: Privacy worries, permissions, feels like a scam
+  content_quality: The content or core output of the app is poor
+  other: Does not fit any theme above
