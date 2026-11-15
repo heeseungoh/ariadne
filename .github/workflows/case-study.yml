@@ -1,6 +1,6 @@
 # Runs the BeReal case study and commits the report to the pull request branch.
-# Needs a repository secret named ANTHROPIC_API_KEY. Labelling costs API credits,
-# so this only runs for branches of this repository, never for forks.
+# Uses the free keyword labeller, so it needs no API key and costs nothing.
+# It writes to the branch, so it only runs for branches of this repository, never for forks.
 name: case-study
 
 on:
@@ -21,7 +21,6 @@ jobs:
       GH_TOKEN: ${{ github.token }}
       PR_NUMBER: ${{ github.event.pull_request.number }}
       HEAD_REF: ${{ github.head_ref }}
-      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -30,16 +29,10 @@ jobs:
         with:
           python-version: "3.12"
       - run: pip install -e .
-      - name: Check for the API key
-        run: |
-          if [ -z "$ANTHROPIC_API_KEY" ]; then
-            gh pr comment "$PR_NUMBER" --repo "$GITHUB_REPOSITORY" --body "The case study did not run: add a repository secret named \`ANTHROPIC_API_KEY\` (Settings > Secrets and variables > Actions), then re-run this job."
-            exit 1
-          fi
       - name: Run the weakness map on BeReal and its top 5 competitors
         run: |
           ariadne-pmm run weakness_map --seed "BeReal" --keyword "photo sharing" --keyword "friends" \
-            --top 5 --out case-studies/bereal 2>&1 | tee run.log
+            --top 5 --tagger keywords --out case-studies/bereal 2>&1 | tee run.log
       - name: Commit the report
         run: |
           git config user.name "github-actions[bot]"
