@@ -30,7 +30,9 @@ class FakeClient:
 
 def test_valid_label_is_kept():
     reviews = [make_review("1", "Ten songs before paying is not enough.")]
-    client = FakeClient([{"id": "1", "theme": "pricing_paywall", "quote": "ten songs before paying"}])
+    client = FakeClient(
+        [{"id": "1", "theme": "pricing_paywall", "quote": "ten songs before paying"}]
+    )
     tags = tag_reviews(reviews, PACK, client)
     assert tags["1"]["theme"] == "pricing_paywall"
     assert tags["1"]["quote"] == "ten songs before paying"
