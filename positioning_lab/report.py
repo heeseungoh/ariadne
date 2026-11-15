@@ -74,7 +74,7 @@ def render_battlecard(
                 quote = review["quote"] or review["text"][:160]
                 lines.append(
                     f'- "{quote}" ({review["rating"]} stars, v{review["version"]}, '
-                    f'{review["date"]}, review {review["review_id"]})'
+                    f"{review['date']}, review {review['review_id']})"
                 )
             lines.append("")
 
