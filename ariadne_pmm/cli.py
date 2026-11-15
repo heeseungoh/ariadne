@@ -11,6 +11,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 from ariadne_pmm.analyze.aggregate import build_frame, plan_samples, theme_shares
+from ariadne_pmm.analyze.keyword_tagger import tag_reviews_by_keywords
 from ariadne_pmm.analyze.tagger import DEFAULT_MODEL, tag_reviews
 from ariadne_pmm.ingest.app_store import fetch_reviews
 from ariadne_pmm.ingest.discover import find_competitors, resolve_app, short_name
@@ -96,10 +97,12 @@ def run_pack(
     data_dir: Path,
     model: str = DEFAULT_MODEL,
     run_date: str | None = None,
+    tagger: str = "claude",
 ) -> Path:
     """Check samples, tag, count and write the report. Returns the report path.
 
     Only apps with enough reviews to rank themes are sent for labelling.
+    `tagger` is "claude" (needs `client`) or "keywords" (free, `client` unused).
     """
     pack = load_pack(pack_name)
     run_date = run_date or datetime.now(tz=timezone.utc).date().isoformat()
@@ -109,13 +112,16 @@ def run_pack(
     listed = [r for r in in_scope if plan[r.app_name][1] == "list"]
     empty_apps = [app for app, (_, tier) in plan.items() if tier == "none"]
 
-    tags = tag_reviews(
-        to_tag,
-        pack,
-        client,
-        cache_path=data_dir / "cache" / f"{pack.cache_key}.jsonl",
-        model=model,
-    )
+    if tagger == "keywords":
+        tags = tag_reviews_by_keywords(to_tag, pack)
+    else:
+        tags = tag_reviews(
+            to_tag,
+            pack,
+            client,
+            cache_path=data_dir / "cache" / f"{pack.cache_key}.jsonl",
+            model=model,
+        )
     frame = build_frame(to_tag, tags, pack)
     shares = theme_shares(frame, pack)
 
@@ -128,7 +134,13 @@ def run_pack(
     report.parent.mkdir(parents=True, exist_ok=True)
     report.write_text(
         render_battlecard(
-            frame, shares, pack, run_date=run_date, listed=listed, empty_apps=empty_apps
+            frame,
+            shares,
+            pack,
+            run_date=run_date,
+            listed=listed,
+            empty_apps=empty_apps,
+            tagger=tagger,
         )
     )
     return report
@@ -159,6 +171,12 @@ def build_parser() -> argparse.ArgumentParser:
     run.add_argument("pack", help="pack name or path to a pack YAML file")
     _add_source_arguments(run)
     run.add_argument("--reviews-file", type=Path, help="use reviews from a JSON file instead")
+    run.add_argument(
+        "--tagger",
+        choices=["claude", "keywords"],
+        default="claude",
+        help="claude: most accurate, needs ANTHROPIC_API_KEY. keywords: free word rules",
+    )
     run.add_argument("--model", default=DEFAULT_MODEL)
     run.add_argument("--out", type=Path, default=Path("reports"))
     return parser
@@ -216,8 +234,13 @@ def main(argv: list[str] | None = None) -> int:
         print_sample_plan(pulled, load_pack(args.pack))
         return 0
 
-    if not os.environ.get("ANTHROPIC_API_KEY"):
-        print("Set ANTHROPIC_API_KEY first (console.anthropic.com).", file=sys.stderr)
+    use_claude = args.tagger == "claude"
+    if use_claude and not os.environ.get("ANTHROPIC_API_KEY"):
+        print(
+            "Set ANTHROPIC_API_KEY first (console.anthropic.com), "
+            "or add --tagger keywords to label for free with word rules.",
+            file=sys.stderr,
+        )
         return 2
 
     if reviews_file:
@@ -225,9 +248,15 @@ def main(argv: list[str] | None = None) -> int:
     else:
         reviews = collect_reviews(_selected_apps(args), args.country, args.pages, args.data)
 
-    import anthropic  # imported here so listing packs works without the SDK configured
+    client = None
+    if use_claude:
+        import anthropic  # imported here so the free paths work without the SDK configured
 
-    report = run_pack(args.pack, reviews, anthropic.Anthropic(), args.out, args.data, args.model)
+        client = anthropic.Anthropic()
+
+    report = run_pack(
+        args.pack, reviews, client, args.out, args.data, args.model, tagger=args.tagger
+    )
     print(f"Report written to {report}")
     return 0
 

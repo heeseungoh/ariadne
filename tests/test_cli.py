@@ -138,3 +138,27 @@ def test_fetch_needs_an_app_but_no_api_key(monkeypatch, capsys):
     monkeypatch.delenv("ANTHROPIC_API_KEY", raising=False)
     assert main(["fetch"]) == 2
     assert "ANTHROPIC_API_KEY" not in capsys.readouterr().err
+
+
+def test_keyword_tagger_runs_without_a_client_or_api_key(tmp_path):
+    reviews = bulk("Alpha", 30, 1, 1000)
+    report = run_pack(
+        "weakness_map",
+        reviews,
+        None,
+        tmp_path / "reports",
+        tmp_path / "data",
+        run_date="2026-11-15",
+        tagger="keywords",
+    )
+    text = report.read_text()
+    assert "labelled by keyword rules, with no AI" in text
+    assert "pricing_paywall: 100% (30 of 30 reviews)" in text
+    assert '"Hit a paywall at once."' in text
+    assert not (tmp_path / "data" / "cache").exists()
+
+
+def test_missing_api_key_message_points_to_the_free_tagger(monkeypatch, capsys):
+    monkeypatch.delenv("ANTHROPIC_API_KEY", raising=False)
+    assert main(["run", "weakness_map", "--app", "123:Demo"]) == 2
+    assert "--tagger keywords" in capsys.readouterr().err

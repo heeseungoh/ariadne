@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from pathlib import Path
 
 import yaml
@@ -21,6 +21,7 @@ class Pack:
     min_reviews: int
     min_sample: int
     themes: dict[str, str]
+    keywords: dict[str, tuple[str, ...]] = field(default_factory=dict)
 
     def sample_tier(self, n: int) -> str:
         """How much an app's sample of n reviews can support: none, list, counts or full."""
@@ -61,6 +62,14 @@ def load_pack(name_or_path: str) -> Pack:
     if not ratings or any(r < 1 or r > 5 for r in ratings):
         raise ValueError("Pack ratings must be between 1 and 5")
 
+    keywords = {
+        theme: tuple(str(word).lower() for word in words)
+        for theme, words in (raw.get("keywords") or {}).items()
+    }
+    unknown = sorted(set(keywords) - set(themes))
+    if unknown:
+        raise ValueError(f"Pack keywords name themes that do not exist: {', '.join(unknown)}")
+
     return Pack(
         name=raw["name"],
         version=int(raw.get("version", 1)),
@@ -70,4 +79,5 @@ def load_pack(name_or_path: str) -> Pack:
         min_reviews=int(raw.get("min_reviews", 10)),
         min_sample=int(raw.get("min_sample", 30)),
         themes=themes,
+        keywords=keywords,
     )

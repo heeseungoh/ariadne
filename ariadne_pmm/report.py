@@ -36,6 +36,7 @@ def render_battlecard(
     run_date: str | None = None,
     listed: list[Review] | None = None,
     empty_apps: list[str] | None = None,
+    tagger: str = "claude",
 ) -> str:
     """Write the battlecard.
 
@@ -47,10 +48,17 @@ def render_battlecard(
     listed = listed or []
     empty_apps = empty_apps or []
     stars = f"{min(pack.ratings)}-{max(pack.ratings)} star"
+    if tagger == "keywords":
+        how = (
+            "by keyword rules, with no AI. The rules only match words, so expect some "
+            "mislabelled reviews and a larger 'other' group than with the Claude labeller. "
+            "Quotes are the sentence that matched."
+        )
+    else:
+        how = "by Claude. Quotes are checked word for word against the review text."
     method = (
-        f"**Method:** {len(frame)} {stars} App Store reviews, each labelled with one theme "
-        f"from a fixed list of {len(pack.themes)} (pack `{pack.cache_key}`). "
-        "Quotes are checked word for word against the review text. "
+        f"**Method:** {len(frame)} {stars} App Store reviews, each given one theme from a "
+        f"fixed list of {len(pack.themes)} (pack `{pack.cache_key}`), labelled {how} "
         f"An app needs {pack.min_sample} reviews for percentages and {pack.min_reviews} for "
         "theme counts; below that its reviews are listed without themes."
     )
