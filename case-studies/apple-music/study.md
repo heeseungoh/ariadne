@@ -77,6 +77,6 @@ saving, crashes. That is the highest of the six; Apple Music is at 6%.
   complaints still match no theme, and some labels are wrong. Read the quotes before quoting a
   number.
 - **A snapshot.** Each app's sample is its 500 most recent US reviews. For apps this size that
-  covers about two weeks: the quoted reviews in the report are dated Oct 29 to Nov 15, 2026.
+  covers about two weeks: the quoted reviews in the report are dated Oct 29 to Nov 16, 2026.
 - **Complaints only.** 1-3 star reviews say where apps lose users, not why people choose them.
 - **Shazam excluded and apps pinned.** See "Apps" above.
