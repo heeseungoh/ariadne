@@ -1,1 +1,1 @@
---seed "Apple Music" --keyword "music streaming" --keyword "songs" --top 5
+--seed "Apple Music" --keyword "music streaming" --keyword "songs" --exclude "Shazam" --top 5
