@@ -162,3 +162,25 @@ def test_missing_api_key_message_points_to_the_free_tagger(monkeypatch, capsys):
     monkeypatch.delenv("ANTHROPIC_API_KEY", raising=False)
     assert main(["run", "weakness_map", "--app", "123:Demo"]) == 2
     assert "--tagger keywords" in capsys.readouterr().err
+
+
+def test_discover_apps_passes_exclude_through(capsys):
+    from tests.test_discover import SEARCHES, FakeSession
+
+    apps = discover_apps(
+        "1", ["photo sharing"], top=2, country="us", session=FakeSession(SEARCHES), exclude=["2"]
+    )
+    assert ("2", "Locket Widget") not in apps
+    assert apps[0] == ("1", "BeReal")
+
+
+def test_exclude_is_accepted_by_every_command():
+    from ariadne_pmm.cli import build_parser
+
+    parser = build_parser()
+    for argv in (
+        ["discover", "Apple Music", "--exclude", "Shazam"],
+        ["fetch", "--seed", "Apple Music", "--exclude", "Shazam"],
+        ["run", "weakness_map", "--seed", "Apple Music", "--exclude", "Shazam"],
+    ):
+        assert parser.parse_args(argv).exclude == ["Shazam"]

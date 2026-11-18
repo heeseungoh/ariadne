@@ -133,8 +133,12 @@ def find_competitors(
     country: str = "us",
     session=None,
     min_hits: int = 2,
+    exclude: list[str] | None = None,
 ) -> list[Candidate]:
     """Return the top competitors to the seed app, best first.
+
+    `exclude` drops apps by App Store ID or by name (case-insensitive, matched
+    against the full store name or its short name), and the next best app moves up.
 
     An app must be found by at least `min_hits` different searches. One search
     alone lets in big apps that only share a keyword (a live run for BeReal let
@@ -159,5 +163,15 @@ def find_competitors(
                 candidate.query_hits += 1
                 candidate.matched_queries.append(query)
 
-    ranked = [c for c in score_candidates(seed, candidates) if c.query_hits >= min_hits]
+    excluded = {e.strip().lower() for e in (exclude or []) if e.strip()}
+
+    def is_excluded(app: AppInfo) -> bool:
+        names = {app.app_id, app.name.lower(), short_name(app.name).lower()}
+        return bool(names & excluded)
+
+    ranked = [
+        c
+        for c in score_candidates(seed, candidates)
+        if c.query_hits >= min_hits and not is_excluded(c.app)
+    ]
     return ranked[:top]
