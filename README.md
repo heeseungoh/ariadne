@@ -57,6 +57,9 @@ ariadne-pmm packs
 # See who Ariadne picks as competitors (free, no API key needed)
 ariadne-pmm discover "BeReal" --keyword "photo sharing" --top 5
 
+# Drop an app that isn't a real competitor; the next best one moves up
+ariadne-pmm discover "Apple Music" --keyword "music streaming" --exclude "Shazam"
+
 # Pull the reviews and see counts by star rating (free, no API key needed)
 ariadne-pmm fetch --seed "BeReal" --keyword "photo sharing" --top 5
 

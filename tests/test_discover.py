@@ -108,3 +108,21 @@ def test_short_name_drops_the_store_tagline():
     assert short_name("Instants, an Instagram app") == "Instants"
     assert short_name("Locket Widget") == "Locket Widget"
     assert short_name("Life360: Family Safety & GPS") == "Life360"
+
+
+def test_exclude_drops_apps_by_id_or_name_and_the_next_moves_up():
+    seed = resolve_app("1", session=FakeSession({}))
+    ranked = find_competitors(
+        seed,
+        keywords=["photo sharing"],
+        top=2,
+        session=FakeSession(SEARCHES),
+        min_hits=1,
+        exclude=["locket widget"],
+    )
+    assert [c.app.name for c in ranked] == ["Poparazzi", "Dispo"]
+
+    by_id = find_competitors(
+        seed, keywords=["photo sharing"], top=10, session=FakeSession(SEARCHES), exclude=["3"]
+    )
+    assert [c.app.name for c in by_id] == ["Locket Widget"]
