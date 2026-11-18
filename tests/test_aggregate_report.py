@@ -99,3 +99,26 @@ def test_plan_samples_covers_every_app_including_empty_ones():
         make_review("3", "Beta", 5),
     ]
     assert plan_samples(reviews, PACK) == {"Alpha": (1, "list"), "Beta": (0, "none")}
+
+
+def test_report_shows_newest_unlabelled_reviews_up_to_the_limit():
+    reviews = [
+        make_review(str(i), "Alpha", 1, f"Odd complaint {i}.", date=f"2026-10-{i + 1:02d}")
+        for i in range(12)
+    ]
+    tags = {r.review_id: {"review_id": r.review_id, "theme": "other", "quote": ""} for r in reviews}
+    frame = build_frame(reviews, tags, PACK)
+    report = render_battlecard(
+        frame, theme_shares(frame, PACK), PACK, run_date="2026-11-17", unlabelled_sample=3
+    )
+    assert "### Matched no theme: 12 of 12" in report
+    assert "Odd complaint 11." in report  # newest
+    assert "Odd complaint 9." in report
+    assert "Odd complaint 8." not in report  # past the limit of 3
+
+
+def test_unlabelled_section_is_skipped_when_every_review_has_a_theme():
+    reviews, tags = make_data()
+    frame = build_frame(reviews, tags, PACK)
+    report = render_battlecard(frame, theme_shares(frame, PACK), PACK, run_date="2026-11-17")
+    assert "Matched no theme" not in report
