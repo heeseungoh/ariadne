@@ -24,6 +24,14 @@ def test_every_theme_but_other_has_keywords():
         ("I got logged out and my password no longer works.", "account_login"),
         ("Ever since the update it is worse. Bring back the old version.", "update_regression"),
         ("I love my dog.", "other"),
+        # added in version 2, from reviews that matched no theme in the Apple Music study
+        ("Way too many adds between every song.", "ads"),
+        ("The app stops playing after each track.", "bugs_crashes"),
+        ("Please give us the old red logo.", "update_regression"),
+        ("It really needs a sleep timer.", "missing_feature"),
+        ("My downloaded songs vanish when I go offline.", "sync_data_loss"),
+        ("It plays the same songs on repeat and the recommendations are bad.", "content_quality"),
+        ("You can only like a limited number of songs.", "pricing_paywall"),
     ],
 )
 def test_reviews_get_the_expected_theme(text, theme):
