@@ -20,6 +20,30 @@ def _cell(count: int, n: int, tier: str) -> str:
     return _pct(count / n) if tier == "full" else f"{count} of {n}"
 
 
+def _unlabelled_section(frame: pd.DataFrame, app: str, n: int, tier: str, limit: int) -> list[str]:
+    """The newest reviews that matched no theme, so a reader can see what the themes miss."""
+    rows = frame[(frame["app_name"] == app) & (frame["theme"] == FALLBACK_THEME)]
+    if rows.empty or limit <= 0:
+        return []
+    count = len(rows)
+    size = f"{_pct(count / n)} ({count} of {n} reviews)" if tier == "full" else f"{count} of {n}"
+    lines = [
+        f"### Matched no theme: {size}",
+        "",
+        f"The {min(limit, count)} newest. If a pattern shows up here, the theme list is missing it.",
+        "",
+    ]
+    for _, review in rows.sort_values("date", ascending=False).head(limit).iterrows():
+        text = f"{review['title']}. {review['text']}".strip()
+        if len(text) > 200:
+            text = text[:200].rstrip() + "..."
+        lines.append(
+            f'- "{text}" ({review["rating"]} stars, v{review["version"]}, {review["date"]}, '
+            f"review {review['review_id']})"
+        )
+    return lines + [""]
+
+
 def _review_line(review) -> str:
     quote = review["quote"] or review["text"][:160]
     return (
@@ -37,6 +61,7 @@ def render_battlecard(
     listed: list[Review] | None = None,
     empty_apps: list[str] | None = None,
     tagger: str = "claude",
+    unlabelled_sample: int = 8,
 ) -> str:
     """Write the battlecard.
 
@@ -112,6 +137,7 @@ def render_battlecard(
                 lines += [heading, ""]
                 lines += [_review_line(r) for _, r in evidence(frame, app, row["theme"]).iterrows()]
                 lines.append("")
+            lines += _unlabelled_section(frame, app, n, tier, unlabelled_sample)
 
     by_app: dict[str, list[Review]] = {}
     for review in listed:
