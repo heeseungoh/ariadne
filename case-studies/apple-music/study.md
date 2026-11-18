@@ -52,8 +52,8 @@ in a month to see whether it does.
 
 | | Apple Music | Spotify | Pandora | SoundCloud | YouTube Music | Amazon Music |
 |---|---|---|---|---|---|---|
-| Ads | 1% | 30% | 28% | 35% | 4% | 5% |
-| Pricing and paywall | 15% | 31% | 28% | 23% | 26% | 28% |
+| Ads | 1% | 30% | 28% | 35% | 4% | 4% |
+| Pricing and paywall | 15% | 31% | 28% | 23% | 26% | 26% |
 
 Ads are a top-two complaint for Spotify, Pandora and SoundCloud, all of which have free,
 ad-supported tiers. Apple Music has no ad tier, and it also draws the fewest pricing
