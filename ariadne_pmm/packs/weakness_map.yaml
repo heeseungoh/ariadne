@@ -1,7 +1,7 @@
 # Research pack: competitor weakness map
 # Each pack is one PMM question with a fixed recipe, so every run is comparable.
 name: weakness_map
-version: 2
+version: 3
 question: Where is each competitor losing users?
 deliverable: battlecard
 
@@ -37,13 +37,14 @@ themes:
 # with the most keyword matches; ties go to the theme listed first; no match is "other".
 # A keyword matches from the start of a word, so "crash" also matches "crashes".
 # Version 2 added words found in reviews that matched no theme in the Apple Music study (#7),
-# including the common misspelling "adds" for ads.
+# including the common misspelling "adds" for ads. Version 3 dropped "duo" (it matched a
+# review about a phone) and added "color" and "paying", after checking v2's quotes.
 keywords:
-  pricing_paywall: [subscription, subscribe, paywall, premium, price, pricing, expensive, cost, charge, refund, money, purchase, free trial, billing, pay for, have to pay, paid, membership, prime, family plan, student plan, duo, limit, skips]
+  pricing_paywall: [subscription, subscribe, paywall, premium, price, pricing, expensive, cost, charge, refund, money, purchase, free trial, billing, pay for, have to pay, paid, membership, prime, family plan, student plan, paying, limit, skips]
   ads: [ads, advert, sponsored, commercials, adds, ad free, ad-free, commercial]
   bugs_crashes: [crash, bug, glitch, freez, froze, broken, doesn't work, doesnt work, not working, won't load, wont load, won't open, wont open, error, stopped working, black screen, keeps closing, stops playing, stop playing, playback, won't play, wont play, stuck, blank]
   performance: [slow, lag, battery, storage, takes forever, loading forever, drain, overheat]
-  update_regression: [update, new version, old version, used to, bring back, removed, redesign, ever since, go back to, change it back, logo, icon, new ui, new look, new design]
+  update_regression: [update, new version, old version, used to, bring back, removed, redesign, ever since, go back to, change it back, logo, icon, new ui, new look, new design, color, colour]
   missing_feature: [wish, should add, please add, need to add, no option, missing, lacks, would be nice, there's no way, theres no way, let us, allow us, sleep timer, lyrics, widget, multi select, multi-select, needs a, option]
   onboarding_setup: [sign up, signup, set up, setup, verification code, tutorial, getting started, create an account, register]
   ux_confusing: [confusing, hard to use, complicated, hard to find, interface, layout, navigate, cluttered, unintuitive]
