@@ -9,6 +9,10 @@ Where are Apple Music and its closest competitors losing users?
 Picked by Ariadne's competitor discovery from the seed "Apple Music" with the keywords
 "music streaming" and "songs". The run log on the pull request lists each pick and why.
 
+Shazam was excluded (`--exclude "Shazam"`). Discovery ranked it fourth, but it identifies songs
+rather than streaming them, and Apple owns it. In the first run 78% of its complaints matched no
+theme, which says its users are complaining about a different product.
+
 ## Method
 
 Pack `weakness_map`: up to 500 most recent US App Store reviews per app, 1-3 star reviews only,
