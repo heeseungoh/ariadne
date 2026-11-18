@@ -39,6 +39,8 @@ jobs:
             for args in case-studies/*/args.txt; do
               [ -f "$args" ] || continue
               study=$(basename "$(dirname "$args")")
+              # A study that pins its apps with --app has nothing to discover
+              grep -q -- "--seed" "$args" || continue
               echo "### Live discovery: $study (study settings, top 15)"
               echo '```'
               sed -e 's/--seed //' -e 's/--top [0-9]*//' "$args" | xargs ariadne-pmm discover --top 15 2>&1 | cut -c1-220
