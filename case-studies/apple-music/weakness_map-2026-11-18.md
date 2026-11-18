@@ -2,26 +2,26 @@
 
 **Question:** Where is each competitor losing users?
 
-**Method:** 1088 1-3 star App Store reviews, each given one theme from a fixed list of 14 (pack `weakness_map-v1`), labelled by keyword rules, with no AI. The rules only match words, so expect some mislabelled reviews and a larger 'other' group than with the Claude labeller. Quotes are the sentence that matched. An app needs 30 reviews for percentages and 10 for theme counts; below that its reviews are listed without themes.
+**Method:** 1033 1-3 star App Store reviews, each given one theme from a fixed list of 14 (pack `weakness_map-v1`), labelled by keyword rules, with no AI. The rules only match words, so expect some mislabelled reviews and a larger 'other' group than with the Claude labeller. Quotes are the sentence that matched. An app needs 30 reviews for percentages and 10 for theme counts; below that its reviews are listed without themes.
 
 ## Complaints by theme
 
-| Theme | Amazon Music (n=214) | Anghami (n=193) | Apple Music (n=138) | Pandora (n=108) | SoundCloud (n=62) | YouTube Music (n=373) |
+| Theme | Amazon Music (n=214) | Apple Music (n=138) | Pandora (n=108) | SoundCloud (n=62) | Spotify (n=138) | YouTube Music (n=373) |
 |---|---|---|---|---|---|---|
-| other | 43% | 47% | 46% | 34% | 34% | 27% |
-| pricing_paywall | 21% | 28% | 15% | 26% | 18% | 25% |
-| ads | 4% | 4% | 0% | 21% | 27% | 4% |
-| update_regression | 7% | 7% | 17% | 6% | 2% | 13% |
-| bugs_crashes | 11% | 4% | 7% | 6% | 11% | 16% |
-| sync_data_loss | 1% | 2% | 4% | 2% | 0% | 1% |
-| performance | 4% | 1% | 1% | 1% | 2% | 3% |
-| missing_feature | 2% | 3% | 4% | 0% | 2% | 1% |
-| customer_support | 1% | 1% | 1% | 0% | 0% | 3% |
-| content_quality | 0% | 1% | 2% | 0% | 0% | 3% |
-| ux_confusing | 2% | 1% | 1% | 2% | 0% | 2% |
-| account_login | 2% | 2% | 1% | 0% | 2% | 0% |
-| onboarding_setup | 0% | 1% | 0% | 0% | 2% | 0% |
-| privacy_trust | 0% | 1% | 1% | 1% | 2% | 0% |
+| other | 43% | 46% | 34% | 34% | 28% | 27% |
+| pricing_paywall | 21% | 15% | 26% | 18% | 31% | 25% |
+| ads | 4% | 0% | 21% | 27% | 22% | 4% |
+| update_regression | 7% | 17% | 6% | 2% | 4% | 13% |
+| bugs_crashes | 11% | 7% | 6% | 11% | 7% | 16% |
+| sync_data_loss | 1% | 4% | 2% | 0% | 0% | 1% |
+| performance | 4% | 1% | 1% | 2% | 2% | 3% |
+| missing_feature | 2% | 4% | 0% | 2% | 1% | 1% |
+| customer_support | 1% | 1% | 0% | 0% | 1% | 3% |
+| content_quality | 0% | 2% | 0% | 0% | 2% | 3% |
+| ux_confusing | 2% | 1% | 2% | 0% | 1% | 2% |
+| account_login | 2% | 1% | 0% | 2% | 0% | 0% |
+| onboarding_setup | 0% | 0% | 0% | 2% | 0% | 0% |
+| privacy_trust | 0% | 1% | 1% | 2% | 0% | 0% |
 
 ## Amazon Music
 
@@ -67,52 +67,6 @@ The 8 newest. If a pattern shows up here, the theme list is missing it.
 - "El Dolby atmost es horrible. Vengo del Dolby atmost de Apple Music y cuando vengo a este, suena cartón, suena muy mal. Suena mejor las canciones que descargo por internet que estas que están en Amazon..." (1 stars, v26.40.0, 2026-11-12, review 14783496313)
 - "Downloads. The downloaded music doesn’t save to the list or even show up! I am not sure what is going on with the app." (2 stars, v26.40.0, 2026-11-11, review 14778660964)
 - "Silly app…. I like to sing … and hummm, and…..mmmmmh.mhjh.mj.  Hey, Siri… just because you sense some audible waves coming out of my air-bud-mics .. lqme.  Never happened previously….. stop reducing t..." (3 stars, v26.40.0, 2026-11-10, review 14776043353)
-
-## Anghami
-
-### pricing_paywall: 28% (54 of 193 reviews)
-
-- "Instead of constantly reminding us that our subscription is about to expire or that it’s our last day to renew, it would be nice to see some appreciation for long-time users." (1 stars, v8.0.43, 2026-11-04, review 14749687771)
-- "Hard to navigate, doesn’t support Arabic well… so going back to YouTube music which is more expensive but worth this headache… I’ll revisit and hopefully you guys can support Arabic music better." (1 stars, v8.0.38, 2026-09-20, review 14572394618)
-- "This app without your permission access your payment information and  charge your without approval." (1 stars, v8.0.38, 2026-09-17, review 14561085121)
-
-### update_regression: 7% (13 of 193 reviews)
-
-- "Plz bring it back like it used to be." (1 stars, v8.0.36, 2026-08-12, review 14419512952)
-- "Guys you need to update the design, it looks so outdated." (3 stars, v8.0.29, 2026-05-04, review 14029143650)
-- "After the update" (1 stars, v8.0.9, 2025-12-02, review 13469258526)
-
-### ads: 4% (8 of 193 reviews)
-
-- "Does not even carry the music they advertise on Google" (1 stars, v8.0.29, 2026-05-08, review 14044018202)
-- "ads ply but not the song." (1 stars, v7.0.58, 2024-10-10, review 11818773343)
-- "Too many advertisements" (1 stars, v7.0.51, 2024-05-09, review 11248550190)
-
-### bugs_crashes: 4% (7 of 193 reviews)
-
-- "Song is not available … I don’t know what’s happening but most of the popular songs are not working … I would like to use this app I don’t want to switch to another one" (2 stars, v8.0.29, 2026-06-14, review 14182614494)
-- "All of a sudden, some songs stopped playing with “an error accured” or “song is not available” errors!" (2 stars, v8.0.29, 2026-06-02, review 14136210006)
-- "A bug that has been there since forever: if you play a song once, and replay the playlist, it starts from the end!" (2 stars, v8.0.23, 2026-03-24, review 13884081570)
-
-### missing_feature: 3% (6 of 193 reviews)
-
-- "Amro Diab songs missing!" (3 stars, v8.0.40, 2026-10-18, review 14681983944)
-- "Basic features are missing for which i have to use spotify or apple music instead" (1 stars, v8.0.21, 2026-02-17, review 13758437241)
-- "I noticed that some artists that I listened to have MISSING songs and MISSING albums." (2 stars, v8.0.13, 2025-12-19, review 13533532419)
-
-### Matched no theme: 47% (90 of 193 reviews)
-
-The 8 newest. If a pattern shows up here, the theme list is missing it.
-
-- "App zfeet. Kss am hek app lano b7tt aghani masrea w ana kteer bkrah hek aghani 5raaa." (1 stars, v8.0.40, 2026-10-28, review 14721200461)
-- "Ai Artist?. This was my favorite music app, but from last year a lot of music are AI generated and I do not know if it easy for anyone to create music but I do not think an App should make it so easy..." (1 stars, v8.0.36, 2026-08-07, review 14401348988)
-- "اسوء برنامج. اسو برنامج بيجبرك تسمع اغاني السبونسر وبشيل الاغنية مش بتتغير بقفل الابلكشن وافتحة بارضة يفتح علي اغاني الاسبونسر لحد ما الاكونت اتقفل بيزنس بس" (1 stars, v8.0.36, 2026-08-03, review 14384074821)
-- "سوني. ابي اشبكه في السوني ؟؟؟" (2 stars, v8.0.29, 2026-05-19, review 14083372579)
-- "سخيف. تطبيق سخيف جدا" (1 stars, v8.0.23, 2026-04-07, review 13932473216)
-- "Hi. In the month 5,50 ??? Wtf" (1 stars, v8.0.23, 2026-03-11, review 13838759801)
-- "حذف حسابى. الاعلانات كثيرة جداً" (1 stars, v8.0.21, 2026-03-03, review 13809524096)
-- "Doesn’t cast to chrome cast. Doesn’t cast to chrome cast 
-App is fine but this basic functionality doesn’t work - opened a ticket and dev team responses were useless - I’m happy to change review once..." (2 stars, v8.0.13, 2026-01-01, review 13583064026)
 
 ## Apple Music
 
@@ -244,6 +198,51 @@ The 8 newest. If a pattern shows up here, the theme list is missing it.
 - "No sirve. Esta aplicación no sirve no te deja crear cuenta no la descarguen es estafa" (1 stars, v8.86.0, 2026-11-10, review 14775339719)
 - "Men. There is adds" (3 stars, v8.86.0, 2026-11-10, review 14775243599)
 - "It’s ok. SoundCloud is great but i just don’t wanna pay so yeah" (3 stars, v8.86.0, 2026-11-09, review 14770543771)
+
+## Spotify
+
+### pricing_paywall: 31% (43 of 138 reviews)
+
+- "Pagar premium e igual te ponen publicidad en los podcast." (1 stars, v9.2.0, 2026-11-16, review 14796779639)
+- "It’s an alright app until you gets 5 ads after 2 songs, so stupid, you shouldn’t have to pay to listen to music peacefully, the app is so premium based" (1 stars, v9.2.0, 2026-11-15, review 14796622511)
+- "This app is honestly horrible without premium." (3 stars, v9.2.0, 2026-11-15, review 14796593132)
+
+### ads: 22% (30 of 138 reviews)
+
+- "Too many ads u can’t even enjoy" (1 stars, v9.2.0, 2026-11-15, review 14796655227)
+- "It a great app, but just wayyyyy to many ads!!" (3 stars, v9.2.0, 2026-11-15, review 14796473403)
+- "Ads, ads and MORE ADDDDDSSSSSS" (1 stars, v9.2.0, 2026-11-15, review 14796381903)
+
+### bugs_crashes: 7% (9 of 138 reviews)
+
+- "It was glitching and hard to maneuver" (3 stars, v9.2.0, 2026-11-15, review 14796240872)
+- "Idk what glitch" (2 stars, v9.2.0, 2026-11-15, review 14795903043)
+- "I’ve used Spotify for a decade and it has never performed so poorly - the last month+ has had incessant crashing and reloading, the app freezing or refusing to load my playlists….it’s ridiculous and n" (2 stars, v9.2.0, 2026-11-15, review 14795737831)
+
+### update_regression: 4% (6 of 138 reviews)
+
+- "After a single song plays, EVERY SINGLE ONE that I had removed, just moments before, will be right back into the queue, like I hadn’t removed them at all." (2 stars, v9.2.0, 2026-11-15, review 14796758076)
+- "Can you make it so that we can move our song in Que around and maybe make our Que a playlist or keep Que history so we can go back to it" (3 stars, v9.2.0, 2026-11-15, review 14796556357)
+- "Opening my queue every time after I add something to it is a terrible update." (1 stars, v9.2.0, 2026-11-15, review 14795427057)
+
+### content_quality: 2% (3 of 138 reviews)
+
+- "The cover for covers are boring and look awful side by side." (2 stars, v9.2.0, 2026-11-15, review 14795080698)
+- "i hate the algorithm and everything spotify pushes me to listen to." (1 stars, v9.2.0, 2026-11-15, review 14794274480)
+- "Shuffle algorithm needs significant improvements." (1 stars, v9.2.0, 2026-11-15, review 14793760554)
+
+### Matched no theme: 28% (39 of 138 reviews)
+
+The 8 newest. If a pattern shows up here, the theme list is missing it.
+
+- "Best music app ever!. I was able to find so many styles of music, I made SO Many playlists and honestly it’s just very easy to use!" (1 stars, v9.2.0, 2026-11-15, review 14796544499)
+- "Free Palestine. Free Palestine" (1 stars, v9.2.0, 2026-11-15, review 14795238979)
+- "Adds. Bro adds are way too long and come to often" (3 stars, v9.2.0, 2026-11-15, review 14793821738)
+- "Too Many Adds. Too Many Adds" (1 stars, v9.2.0, 2026-11-15, review 14793931928)
+- "Fools. App sucks after the layoffs and AI adoption" (1 stars, v9.2.0, 2026-11-15, review 14794136448)
+- "Can’t control volume with iPhone physical volume rocker. Honestly, one of the most important features on a music player is volume control, and Spotify’s is so flakey that half the time you can’t chang..." (2 stars, v9.2.0, 2026-11-15, review 14794193505)
+- "To many danm adds. Well u read the title" (3 stars, v9.2.0, 2026-11-15, review 14794259798)
+- "Shuffle doesn’t Shuffle. From a programmatic perspective the backend platform and engineering is garbage. The app shuffle toggle in “Likes” playlist does not shuffle. I have over 1,100 songs in my “li..." (1 stars, v9.2.0, 2026-11-15, review 14794713668)
 
 ## YouTube Music
 
