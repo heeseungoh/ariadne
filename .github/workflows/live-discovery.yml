@@ -8,6 +8,7 @@ on:
       - "ariadne_pmm/ingest/discover.py"
       - "ariadne_pmm/ingest/app_store.py"
       - "ariadne_pmm/cli.py"
+      - "case-studies/*/args.txt"
       - ".github/workflows/live-discovery.yml"
 
 permissions:
@@ -34,6 +35,15 @@ jobs:
             echo '```'
             ariadne-pmm fetch --seed "BeReal" --keyword "photo sharing" --keyword "friends" --top 5 --pages 2 2>&1 | grep -E "pulled|Sample check|reviews:"
             echo '```'
+            # Each case study's own settings, with a longer list so near-misses are visible
+            for args in case-studies/*/args.txt; do
+              [ -f "$args" ] || continue
+              study=$(basename "$(dirname "$args")")
+              echo "### Live discovery: $study (study settings, top 15)"
+              echo '```'
+              sed -e 's/--seed //' -e 's/--top [0-9]*//' "$args" | xargs ariadne-pmm discover --top 15 2>&1 | cut -c1-220
+              echo '```'
+            done
           } > discovery.md
           cat discovery.md
       - name: Post result on the pull request
