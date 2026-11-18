@@ -29,7 +29,12 @@ def parse_app(value: str) -> tuple[str, str]:
 
 
 def discover_apps(
-    seed_query: str, keywords: list[str], top: int, country: str, session=None
+    seed_query: str,
+    keywords: list[str],
+    top: int,
+    country: str,
+    session=None,
+    exclude: list[str] | None = None,
 ) -> list[tuple[str, str]]:
     """Resolve the seed app, find its competitors, print why each was picked.
 
@@ -41,7 +46,7 @@ def discover_apps(
 
     print(f"Seed: {seed.name} (id {seed.app_id}, {seed.genre}, {seed.rating_count:,} ratings)")
     competitors = find_competitors(
-        seed, keywords=keywords, top=top, country=country, session=session
+        seed, keywords=keywords, top=top, country=country, session=session, exclude=exclude
     )
     for rank, candidate in enumerate(competitors, start=1):
         app = candidate.app
@@ -161,6 +166,12 @@ def build_parser() -> argparse.ArgumentParser:
         help="extra search term for finding competitors (repeatable)",
     )
     discover.add_argument("--top", type=int, default=5)
+    discover.add_argument(
+        "--exclude",
+        action="append",
+        default=[],
+        help="drop an app from the competitors by ID or name (repeatable)",
+    )
     discover.add_argument("--country", default="us")
 
     fetch = commands.add_parser("fetch", help="pull reviews and show counts, without labelling")
@@ -200,6 +211,12 @@ def _add_source_arguments(command: argparse.ArgumentParser) -> None:
         help="extra search term for finding competitors (repeatable)",
     )
     command.add_argument("--top", type=int, default=5, help="competitors to add to --seed")
+    command.add_argument(
+        "--exclude",
+        action="append",
+        default=[],
+        help="drop an app from the competitors by ID or name (repeatable)",
+    )
     command.add_argument("--country", default="us")
     command.add_argument("--pages", type=int, default=10, help="pages of 50 reviews per app")
     command.add_argument("--data", type=Path, default=Path("data"))
@@ -208,7 +225,7 @@ def _add_source_arguments(command: argparse.ArgumentParser) -> None:
 def _selected_apps(args: argparse.Namespace) -> list[tuple[str, str]]:
     apps = list(args.app)
     if args.seed:
-        apps += discover_apps(args.seed, args.keyword, args.top, args.country)
+        apps += discover_apps(args.seed, args.keyword, args.top, args.country, exclude=args.exclude)
     return list(dict.fromkeys(apps))
 
 
@@ -221,7 +238,7 @@ def main(argv: list[str] | None = None) -> int:
         return 0
 
     if args.command == "discover":
-        discover_apps(args.seed, args.keyword, args.top, args.country)
+        discover_apps(args.seed, args.keyword, args.top, args.country, exclude=args.exclude)
         return 0
 
     reviews_file = getattr(args, "reviews_file", None)
