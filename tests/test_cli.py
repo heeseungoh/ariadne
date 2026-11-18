@@ -67,7 +67,7 @@ def test_run_pack_end_to_end(tmp_path, capsys):
     assert "review 3000)" in text
     assert "No 1-3 star reviews were found for: Delta." in text
 
-    cache = (tmp_path / "data" / "cache" / "weakness_map-v1.jsonl").read_text()
+    cache = (tmp_path / "data" / "cache" / "weakness_map-v2.jsonl").read_text()
     assert '"3000"' not in cache  # the one-review app cost nothing to label
     assert len(cache.splitlines()) == 42
     assert (tmp_path / "data" / "snapshots" / "weakness_map-2026-11-15.csv").exists()
