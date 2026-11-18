@@ -52,8 +52,8 @@ in a month to see whether it does.
 
 | | Apple Music | Spotify | Pandora | SoundCloud | YouTube Music | Amazon Music |
 |---|---|---|---|---|---|---|
-| Ads | 1% | 30% | 28% | 35% | 4% | 4% |
-| Pricing and paywall | 15% | 31% | 28% | 23% | 26% | 26% |
+| Ads | 1% | 30% | 28% | 35% | 4% | 5% |
+| Pricing and paywall | 15% | 31% | 28% | 23% | 26% | 28% |
 
 Ads are a top-two complaint for Spotify, Pandora and SoundCloud, all of which have free,
 ad-supported tiers. Apple Music has no ad tier, and it also draws the fewest pricing
@@ -80,7 +80,7 @@ saving, crashes. That is the highest of the six; Apple Music is at 6%.
   covers about two weeks: the quoted reviews in the report are dated Oct 29 to Nov 16, 2026.
 - **Complaints only.** 1-3 star reviews say where apps lose users, not why people choose them.
 - **Shazam excluded and apps pinned.** See "Apps" above.
-- **Amazon Music's sample.** In the final run Apple's feed returned 350 of Amazon Music's
-  reviews instead of 500, so its figures rest on 145 complaints rather than about 210.
+- **Amazon Music's sample varies.** Across runs Apple's feed returned between 350 and 500 of
+  Amazon Music's reviews. The figures here come from a full pull of 500 (214 complaints).
 - **Numbers can move between runs.** Each run pulls the latest reviews, so re-running the study
   shifts the figures slightly. The findings match the report committed with them.
