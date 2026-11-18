@@ -8,7 +8,7 @@ def test_weakness_map_pack_loads():
     assert pack.ratings == (1, 2, 3)
     assert "pricing_paywall" in pack.themes
     assert "other" in pack.themes
-    assert pack.cache_key == "weakness_map-v1"
+    assert pack.cache_key == "weakness_map-v2"
     assert "weakness_map" in available_packs()
 
 
