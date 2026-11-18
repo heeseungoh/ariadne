@@ -2,21 +2,21 @@
 
 **Question:** Where is each competitor losing users?
 
-**Method:** 1033 1-3 star App Store reviews, each given one theme from a fixed list of 14 (pack `weakness_map-v3`), labelled by keyword rules, with no AI. The rules only match words, so expect some mislabelled reviews and a larger 'other' group than with the Claude labeller. Quotes are the sentence that matched. An app needs 30 reviews for percentages and 10 for theme counts; below that its reviews are listed without themes.
+**Method:** 964 1-3 star App Store reviews, each given one theme from a fixed list of 14 (pack `weakness_map-v3`), labelled by keyword rules, with no AI. The rules only match words, so expect some mislabelled reviews and a larger 'other' group than with the Claude labeller. Quotes are the sentence that matched. An app needs 30 reviews for percentages and 10 for theme counts; below that its reviews are listed without themes.
 
 ## Complaints by theme
 
-| Theme | Amazon Music (n=214) | Apple Music (n=138) | Pandora (n=108) | SoundCloud (n=62) | Spotify (n=138) | YouTube Music (n=373) |
+| Theme | Amazon Music (n=145) | Apple Music (n=138) | Pandora (n=108) | SoundCloud (n=62) | Spotify (n=138) | YouTube Music (n=373) |
 |---|---|---|---|---|---|---|
-| update_regression | 4% | 38% | 6% | 2% | 4% | 12% |
-| ads | 5% | 1% | 28% | 35% | 30% | 4% |
-| pricing_paywall | 28% | 15% | 28% | 23% | 31% | 26% |
+| update_regression | 3% | 38% | 6% | 2% | 4% | 12% |
+| ads | 4% | 1% | 28% | 35% | 30% | 4% |
+| pricing_paywall | 26% | 15% | 28% | 23% | 31% | 26% |
 | other | 23% | 17% | 18% | 21% | 18% | 18% |
-| bugs_crashes | 14% | 6% | 8% | 11% | 7% | 19% |
-| content_quality | 11% | 7% | 6% | 0% | 3% | 5% |
-| sync_data_loss | 5% | 7% | 4% | 0% | 0% | 4% |
-| missing_feature | 3% | 4% | 1% | 3% | 3% | 4% |
-| performance | 4% | 1% | 1% | 0% | 2% | 2% |
+| bugs_crashes | 17% | 6% | 8% | 11% | 7% | 19% |
+| content_quality | 10% | 7% | 6% | 0% | 3% | 5% |
+| sync_data_loss | 6% | 7% | 4% | 0% | 0% | 4% |
+| performance | 6% | 1% | 1% | 0% | 2% | 2% |
+| missing_feature | 2% | 4% | 1% | 3% | 3% | 4% |
 | customer_support | 0% | 1% | 0% | 0% | 1% | 2% |
 | ux_confusing | 2% | 1% | 1% | 0% | 1% | 2% |
 | account_login | 2% | 1% | 0% | 2% | 0% | 0% |
@@ -25,37 +25,37 @@
 
 ## Amazon Music
 
-### pricing_paywall: 28% (59 of 214 reviews)
+### pricing_paywall: 26% (38 of 145 reviews)
 
 - "Truly an amazing thing IF you shell out money." (3 stars, v26.40.0, 2026-11-14, review 14790969265)
 - "Limits how many songs you can play in a row on your playlists or starts repeating the same song over and over in an attempt to get you to pay for the subscription beyond your prime membership" (2 stars, v26.40.0, 2026-11-14, review 14789476041)
 - "Such as, not being able to play a single song that I looked up without having to waste half of my limited skips." (3 stars, v26.40.0, 2026-11-13, review 14788393165)
 
-### bugs_crashes: 14% (30 of 214 reviews)
+### bugs_crashes: 17% (24 of 145 reviews)
 
 - "Things glitch, Songs restarting, everything needs to be fixed." (2 stars, v26.40.0, 2026-11-15, review 14796630045)
 - "Not working at all btw" (2 stars, v26.40.0, 2026-11-14, review 14790971733)
 - "It used to work so well but now anytime you try to do anything while listening to music, the playback starts skipping." (3 stars, v26.40.0, 2026-11-14, review 14789403325)
 
-### content_quality: 11% (23 of 214 reviews)
+### content_quality: 10% (14 of 145 reviews)
 
 - "Vengo del Dolby atmost de Apple Music y cuando vengo a este, suena cartón, suena muy mal." (1 stars, v26.40.0, 2026-11-12, review 14783496313)
 - "I’ve noticed some songs sound loud while others at the  same volume sound very low." (3 stars, v26.40.0, 2026-11-12, review 14782202909)
 - "stop reducing the volume." (3 stars, v26.40.0, 2026-11-10, review 14776043353)
 
-### ads: 5% (10 of 214 reviews)
+### performance: 6% (8 of 145 reviews)
 
-- "Not ad free" (2 stars, v26.40.0, 2026-11-12, review 14783614365)
-- "I want free music with no ads." (1 stars, v26.40.0, 2026-11-12, review 14780858833)
-- "Other than that I love the app and no ads" (3 stars, v26.39.0, 2026-11-08, review 14768250843)
+- "The reason why I hate this app is because I use it and it stops literally mid it stops like I’m listening to it and it’s like stop and also because it’s super slow and because it’s like doesn’t work f" (1 stars, v26.40.0, 2026-11-13, review 14787101613)
+- "Slow" (1 stars, v26.40.0, 2026-11-11, review 14780039468)
+- "Great platform just takes up way too much verdammnt storage" (2 stars, v26.40.0, 2026-11-11, review 14779987247)
 
-### sync_data_loss: 5% (10 of 214 reviews)
+### sync_data_loss: 6% (8 of 145 reviews)
 
 - "The downloaded music doesn’t save to the list or even show up!" (2 stars, v26.40.0, 2026-11-11, review 14778660964)
 - "Some of my music/ songs has been removed or deleted without any warning or notice." (3 stars, v26.40.0, 2026-11-10, review 14773831371)
 - "💜💜💜💜💜💜💜 the only thing is that you can only download one audio book every month I listen  to them way to much this should also have more audio books" (3 stars, v26.39.0, 2026-11-06, review 14759029999)
 
-### Matched no theme: 23% (49 of 214 reviews)
+### Matched no theme: 23% (33 of 145 reviews)
 
 The 8 newest. If a pattern shows up here, the theme list is missing it.
 
