@@ -80,3 +80,7 @@ saving, crashes. That is the highest of the six; Apple Music is at 6%.
   covers about two weeks: the quoted reviews in the report are dated Oct 29 to Nov 16, 2026.
 - **Complaints only.** 1-3 star reviews say where apps lose users, not why people choose them.
 - **Shazam excluded and apps pinned.** See "Apps" above.
+- **Amazon Music's sample.** In the final run Apple's feed returned 350 of Amazon Music's
+  reviews instead of 500, so its figures rest on 145 complaints rather than about 210.
+- **Numbers can move between runs.** Each run pulls the latest reviews, so re-running the study
+  shifts the figures slightly. The findings match the report committed with them.
