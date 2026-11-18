@@ -2,216 +2,219 @@
 
 **Question:** Where is each competitor losing users?
 
-**Method:** 1033 1-3 star App Store reviews, each given one theme from a fixed list of 14 (pack `weakness_map-v1`), labelled by keyword rules, with no AI. The rules only match words, so expect some mislabelled reviews and a larger 'other' group than with the Claude labeller. Quotes are the sentence that matched. An app needs 30 reviews for percentages and 10 for theme counts; below that its reviews are listed without themes.
+**Method:** 1033 1-3 star App Store reviews, each given one theme from a fixed list of 14 (pack `weakness_map-v2`), labelled by keyword rules, with no AI. The rules only match words, so expect some mislabelled reviews and a larger 'other' group than with the Claude labeller. Quotes are the sentence that matched. An app needs 30 reviews for percentages and 10 for theme counts; below that its reviews are listed without themes.
 
 ## Complaints by theme
 
 | Theme | Amazon Music (n=214) | Apple Music (n=138) | Pandora (n=108) | SoundCloud (n=62) | Spotify (n=138) | YouTube Music (n=373) |
 |---|---|---|---|---|---|---|
-| other | 43% | 46% | 34% | 34% | 28% | 27% |
-| pricing_paywall | 21% | 15% | 26% | 18% | 31% | 25% |
-| ads | 4% | 0% | 21% | 27% | 22% | 4% |
-| update_regression | 7% | 17% | 6% | 2% | 4% | 13% |
-| bugs_crashes | 11% | 7% | 6% | 11% | 7% | 16% |
-| sync_data_loss | 1% | 4% | 2% | 0% | 0% | 1% |
-| performance | 4% | 1% | 1% | 2% | 2% | 3% |
-| missing_feature | 2% | 4% | 0% | 2% | 1% | 1% |
-| customer_support | 1% | 1% | 0% | 0% | 1% | 3% |
-| content_quality | 0% | 2% | 0% | 0% | 2% | 3% |
-| ux_confusing | 2% | 1% | 2% | 0% | 1% | 2% |
+| ads | 5% | 1% | 28% | 37% | 31% | 4% |
+| update_regression | 4% | 33% | 6% | 2% | 4% | 11% |
+| pricing_paywall | 27% | 14% | 29% | 19% | 30% | 29% |
+| other | 23% | 20% | 18% | 21% | 19% | 17% |
+| bugs_crashes | 15% | 7% | 8% | 13% | 7% | 20% |
+| content_quality | 11% | 8% | 6% | 0% | 3% | 5% |
+| sync_data_loss | 5% | 7% | 4% | 0% | 0% | 4% |
+| missing_feature | 3% | 5% | 1% | 3% | 3% | 4% |
+| performance | 4% | 1% | 1% | 0% | 2% | 2% |
+| ux_confusing | 2% | 1% | 0% | 0% | 1% | 2% |
 | account_login | 2% | 1% | 0% | 2% | 0% | 0% |
 | onboarding_setup | 0% | 0% | 0% | 2% | 0% | 0% |
-| privacy_trust | 0% | 1% | 1% | 2% | 0% | 0% |
+| privacy_trust | 0% | 0% | 1% | 2% | 0% | 0% |
+| customer_support | 0% | 1% | 0% | 0% | 1% | 0% |
 
 ## Amazon Music
 
-### pricing_paywall: 21% (46 of 214 reviews)
+### pricing_paywall: 27% (58 of 214 reviews)
 
+- "Please update for iPhone Duo." (1 stars, v26.40.0, 2026-11-14, review 14791000085)
 - "Truly an amazing thing IF you shell out money." (3 stars, v26.40.0, 2026-11-14, review 14790969265)
 - "Limits how many songs you can play in a row on your playlists or starts repeating the same song over and over in an attempt to get you to pay for the subscription beyond your prime membership" (2 stars, v26.40.0, 2026-11-14, review 14789476041)
-- "Another is the fact i can't actually shuffle any of my playlists on the free trail, i don't believe that's something you should have to pay for." (3 stars, v26.40.0, 2026-11-13, review 14788393165)
 
-### bugs_crashes: 11% (24 of 214 reviews)
+### bugs_crashes: 15% (32 of 214 reviews)
 
 - "Things glitch, Songs restarting, everything needs to be fixed." (2 stars, v26.40.0, 2026-11-15, review 14796630045)
 - "Not working at all btw" (2 stars, v26.40.0, 2026-11-14, review 14790971733)
-- "Also, there is a pretty consistent UI bug that essentially disables the music interface (play/pause, skip, ect)." (1 stars, v26.40.0, 2026-11-13, review 14785412154)
-
-### update_regression: 7% (16 of 214 reviews)
-
-- "Please update for iPhone Duo." (1 stars, v26.40.0, 2026-11-14, review 14791000085)
 - "It used to work so well but now anytime you try to do anything while listening to music, the playback starts skipping." (3 stars, v26.40.0, 2026-11-14, review 14789403325)
-- "The update removing the offline mode on iOS was a terrible move." (3 stars, v26.40.0, 2026-11-13, review 14786980384)
 
-### performance: 4% (9 of 214 reviews)
+### content_quality: 11% (23 of 214 reviews)
 
-- "The reason why I hate this app is because I use it and it stops literally mid it stops like I’m listening to it and it’s like stop and also because it’s super slow and because it’s like doesn’t work f" (1 stars, v26.40.0, 2026-11-13, review 14787101613)
-- "Slow" (1 stars, v26.40.0, 2026-11-11, review 14780039468)
-- "Great platform just takes up way too much verdammnt storage" (2 stars, v26.40.0, 2026-11-11, review 14779987247)
+- "Vengo del Dolby atmost de Apple Music y cuando vengo a este, suena cartón, suena muy mal." (1 stars, v26.40.0, 2026-11-12, review 14783496313)
+- "I’ve noticed some songs sound loud while others at the  same volume sound very low." (3 stars, v26.40.0, 2026-11-12, review 14782202909)
+- "stop reducing the volume." (3 stars, v26.40.0, 2026-11-10, review 14776043353)
 
-### ads: 4% (8 of 214 reviews)
+### ads: 5% (10 of 214 reviews)
 
+- "Not ad free" (2 stars, v26.40.0, 2026-11-12, review 14783614365)
 - "I want free music with no ads." (1 stars, v26.40.0, 2026-11-12, review 14780858833)
 - "Other than that I love the app and no ads" (3 stars, v26.39.0, 2026-11-08, review 14768250843)
-- "I’ve discovered a number of artists with this app, and I love no commercials (for now), but unless I am inside my apartment getting this through a stereo, it will stick on a song and repeat it over an" (2 stars, v26.39.0, 2026-11-06, review 14759458940)
 
-### Matched no theme: 43% (91 of 214 reviews)
+### sync_data_loss: 5% (10 of 214 reviews)
+
+- "The downloaded music doesn’t save to the list or even show up!" (2 stars, v26.40.0, 2026-11-11, review 14778660964)
+- "Some of my music/ songs has been removed or deleted without any warning or notice." (3 stars, v26.40.0, 2026-11-10, review 14773831371)
+- "💜💜💜💜💜💜💜 the only thing is that you can only download one audio book every month I listen  to them way to much this should also have more audio books" (3 stars, v26.39.0, 2026-11-06, review 14759029999)
+
+### Matched no theme: 23% (49 of 214 reviews)
 
 The 8 newest. If a pattern shows up here, the theme list is missing it.
 
 - "SoSo. Millions of songs but little I have little control" (3 stars, v26.40.0, 2026-11-15, review 14795689279)
-- "Snow. Cool selections … but needs a sleep timer option." (3 stars, v26.40.0, 2026-11-15, review 14792850464)
-- "terrible navigation and memberships. The fact that I had Amazon prime and there wasn’t some type of ease in the navigation selection and playback. It makes me furious because there’s no reason that yo..." (1 stars, v26.40.0, 2026-11-12, review 14784108862)
-- "Some music sounds low.. I’ve noticed some songs sound loud while others at the  same volume sound very low. I played the same song on the Apple app and the same song plays at the right volume sound th..." (3 stars, v26.40.0, 2026-11-12, review 14782202909)
-- "Not ad free. Not ad free" (2 stars, v26.40.0, 2026-11-12, review 14783614365)
-- "El Dolby atmost es horrible. Vengo del Dolby atmost de Apple Music y cuando vengo a este, suena cartón, suena muy mal. Suena mejor las canciones que descargo por internet que estas que están en Amazon..." (1 stars, v26.40.0, 2026-11-12, review 14783496313)
-- "Downloads. The downloaded music doesn’t save to the list or even show up! I am not sure what is going on with the app." (2 stars, v26.40.0, 2026-11-11, review 14778660964)
-- "Silly app…. I like to sing … and hummm, and…..mmmmmh.mhjh.mj.  Hey, Siri… just because you sense some audible waves coming out of my air-bud-mics .. lqme.  Never happened previously….. stop reducing t..." (3 stars, v26.40.0, 2026-11-10, review 14776043353)
+- "It’s ok. Won’t allow a good shuffle. Plus it’s picked songs I don’t like." (2 stars, v26.40.0, 2026-11-10, review 14773457869)
+- "Not the same!!. Over several months I have noticed that only 2-3 songs play from an artist station and then it stops. Either have to choose a separate artist station or close the app to refresh. Have..." (2 stars, v26.40.0, 2026-11-09, review 14771471054)
+- "Still not fixed!!!. Only plays 4 songs (over and over) from my playlist if it is on shuffle mode - even if there are more than four songs on the playlist. Extremely frustrating!!" (1 stars, v26.40.0, 2026-11-09, review 14768899667)
+- "your worth trillions why so bad.. keeps taking songs off my playlists temporarily and iphone app has no equlizer." (1 stars, v26.39.0, 2026-11-08, review 14765656166)
+- "REVue. They changed how you get access to the music recently  I DO NOT LIKE THE NEW WAY AT ALL.  ITS VERY TRIUBLESOME.  Otherwise great ,music!" (3 stars, v26.39.0, 2026-11-07, review 14764417053)
+- "Whatttttttt!!!!!!!!!!!!. This app doesn’t let me let me play any music like it’s supposed to be a music app so why isn’t it working please figure this out or i’m deleting this app 😡😡I am very mad uhhh..." (1 stars, v26.39.0, 2026-11-07, review 14763772368)
+- "I’m car it times out :-(. I use this in my 2001 VW PASSAT.  It times out a lot!
+
+Not my favorite!" (3 stars, v26.39.0, 2026-11-06, review 14758473138)
 
 ## Apple Music
 
-### update_regression: 17% (23 of 138 reviews)
+### update_regression: 33% (46 of 138 reviews)
 
+- "New UI for playlists is awful + serious issue" (1 stars, v3.18, 2026-11-15, review 14796484958)
+- "Apple  listen to your consumers & get rid of that bland BASIC b&w logo." (1 stars, v3.18, 2026-11-15, review 14794616868)
 - "Change it back to red!" (1 stars, v3.18, 2026-11-15, review 14794330417)
-- "Go back to the orange red." (2 stars, v3.18, 2026-11-15, review 14794113580)
-- "Update" (2 stars, v3.18, 2026-11-15, review 14793935536)
 
-### pricing_paywall: 15% (21 of 138 reviews)
+### pricing_paywall: 14% (20 of 138 reviews)
 
 - "Subscription is not worth what it’s giving you." (1 stars, v3.18, 2026-11-15, review 14796318526)
 - "Please listen to the feedback of your users Apple because a lot of them are canceling their subscriptions." (3 stars, v3.18, 2026-11-15, review 14792781005)
-- "I CAN’T STAND THIS APP WITH SUCH COLOR ICON NOW DON’T EVEN WANNA SEE IT OMG I’M NOT GOING TO CONTINUE THE SUBSCRIPTION IF APPLE KEEPING THIS DEADLY COLOR, YOU ARE SENDING CUSTOMERS TO COMPETITORS." (1 stars, v3.18, 2026-11-14, review 14792421631)
+- "I HATE THE APPLE PREMIUM I CANT DO ANYTHING" (1 stars, v3.18, 2026-11-12, review 14782955665)
 
-### bugs_crashes: 7% (10 of 138 reviews)
+### content_quality: 8% (11 of 138 reviews)
 
-- "the playlist queue feature is broken." (1 stars, v3.18, 2026-11-13, review 14785270565)
-- "Recently anytime that I skip a song my app freezes and then doesn’t work at all, I’ve already updated the app and uninstalled and then reinstalled and logged in and nothing has helped, considering can" (3 stars, v3.18, 2026-11-12, review 14783536559)
-- "country/region error" (3 stars, v3.18, 2026-11-12, review 14783465908)
+- "The personalized music is bad, it doesn’t change fast enough with my taste and will sometimes play songs I haven’t listened to in years or recommend the most random artists that I’ve never listened to" (3 stars, v3.18, 2026-11-14, review 14790414810)
+- "It sucks at recommending music and repeats the same songs over and over" (2 stars, v3.18, 2026-11-13, review 14785657027)
+- "Every time I shuffle my music it plays the same songs over and over." (1 stars, v3.18, 2026-11-12, review 14782824245)
 
-### sync_data_loss: 4% (6 of 138 reviews)
+### sync_data_loss: 7% (10 of 138 reviews)
 
 - "It ate all my live shows" (1 stars, v3.18, 2026-11-15, review 14795986214)
 - "Went from an iPhone 12 to an iPhone 15 and 90% of my music disappeared." (1 stars, v3.18, 2026-11-14, review 14791478786)
 - "Before update I had all my music now with updates it not only makes u pay but it deleted all of my music that i already downloaded" (1 stars, v3.18, 2026-11-12, review 14783634582)
 
-### missing_feature: 4% (5 of 138 reviews)
+### bugs_crashes: 7% (9 of 138 reviews)
 
-- "at least allow us to change the color to what we want :(" (2 stars, v3.18, 2026-11-14, review 14789605213)
-- "I wish we had a way to fully delete this it is the worst music app I have ever used." (1 stars, v3.18, 2026-11-12, review 14782901356)
-- "Lacks Functionality" (2 stars, v3.18, 2026-11-11, review 14779837314)
+- "If I’m play a particular genre stuck with that genre or artist." (1 stars, v3.18, 2026-11-15, review 14794304137)
+- "the playlist queue feature is broken." (1 stars, v3.18, 2026-11-13, review 14785270565)
+- "Recently anytime that I skip a song my app freezes and then doesn’t work at all, I’ve already updated the app and uninstalled and then reinstalled and logged in and nothing has helped, considering can" (3 stars, v3.18, 2026-11-12, review 14783536559)
 
-### Matched no theme: 46% (63 of 138 reviews)
+### Matched no theme: 20% (28 of 138 reviews)
 
 The 8 newest. If a pattern shows up here, the theme list is missing it.
 
-- "New UI for playlists is awful + serious issue. You guys really need to step up your game for media protection, there is legitimate audio pornography on here that is not labeled as explicit. Y’all real..." (1 stars, v3.18, 2026-11-15, review 14796484958)
-- "Auto play. I feel like if you use a music app for a period of time, it should know the type of music you listen to and play better recommendations. Why when I play Van Halen, Ariana Grande Positions p..." (1 stars, v3.18, 2026-11-15, review 14794304137)
-- "Terrible. Apple  listen to your consumers & get rid of that bland BASIC b&w logo.  This is terrible.   If any of you want the red logo back download the old red & white image from Google.  
-1-Go to S..." (1 stars, v3.18, 2026-11-15, review 14794616868)
 - "Mid. I LIKE SPOTIFY BETTER" (1 stars, v3.18, 2026-11-14, review 14791056524)
-- "This app is kinda bad. The personalized music is bad, it doesn’t change fast enough with my taste and will sometimes play songs I haven’t listened to in years or recommend the most random artists that..." (3 stars, v3.18, 2026-11-14, review 14790414810)
-- "could be better. could you do a multi select feature, like for playlists, or songs to delete or remove from library? please??" (3 stars, v3.18, 2026-11-14, review 14790351872)
 - "Explicit album art. I don’t see a way to shut off album art from showing. Our home view is in the kitchen and we constantly have explicit images showing around children when playing Apple Music." (1 stars, v3.18, 2026-11-14, review 14789760680)
 - "Can’t listen to a song without paying. Read the title…😭😭" (1 stars, v3.18, 2026-11-14, review 14789683828)
+- "Y. Nooooooo spotify better 🙄" (2 stars, v3.18, 2026-11-14, review 14789265659)
+- "Horrible with anyone not on an Apple product. Apple has made the app near unusable. You have to use Apple share which runs on Bluetooth and is a horrible horrible experience. You can’t connect to any..." (1 stars, v3.18, 2026-11-14, review 14790973880)
+- "Why?. I want to hear music that relates to the music I search, I don’t want to here lil baby freestyle for the last 10 years" (2 stars, v3.18, 2026-11-13, review 14787791984)
+- "Unrevert the color change. The app hasn’t changed in 12 years or so, and it’s breaking my brain today." (1 stars, v3.18, 2026-11-13, review 14786000855)
+- "How do I use it?. It is a great app with my opinion and it would be wonderful if I knew how to work it if anybody out there can tell me how to work it maybe I will retry and give it a full five stars..." (3 stars, v3.18, 2026-11-12, review 14783280130)
 
 ## Pandora
 
-### pricing_paywall: 26% (28 of 108 reviews)
+### pricing_paywall: 29% (31 of 108 reviews)
 
 - "Ur always putting everything thing by a paywall like it’s annoying" (1 stars, v2611.1, 2026-11-15, review 14795923548)
 - "If the card you use for your subscription is expired or if it had been replaced due to compromise - instead of giving you a heads up & allowing you to update your account payment, they automatically c" (1 stars, v2611.1, 2026-11-15, review 14794973479)
 - "Long story short, I pay for premium." (2 stars, v2611.1, 2026-11-15, review 14794878788)
 
-### ads: 21% (23 of 108 reviews)
+### ads: 28% (30 of 108 reviews)
 
 - "Good but lowkey too much ads yk not as bad as soundcloud but eh" (3 stars, v2611.1, 2026-11-14, review 14790719124)
+- "There are free music apps that are ad free." (1 stars, v2611.1, 2026-11-14, review 14790059246)
 - "Ads are too long." (3 stars, v2611.1, 2026-11-13, review 14787271810)
-- "While I don’t mind ads this app takes it to a whole new level.." (1 stars, v2611.1, 2026-11-13, review 14787077818)
 
-### bugs_crashes: 6% (7 of 108 reviews)
+### bugs_crashes: 8% (9 of 108 reviews)
 
+- "After each song and or ad, the app stops playing and I have to hit play or close app after each song." (1 stars, v2611.1, 2026-11-12, review 14781662346)
 - "This new update glitching out, it stops whatever it feel like it or do not connecting." (1 stars, v2611.1, 2026-11-09, review 14772486740)
 - "Dealt with all the glitches and poor quality along with the added bonuses of being able to create my own stations." (2 stars, v2611.1, 2026-11-04, review 14751817619)
-- "So it keeps freezing up and won't work and it's really annoying and it's not working" (1 stars, v2610.2, 2026-10-30, review 14731065793)
 
-### update_regression: 6% (7 of 108 reviews)
+### content_quality: 6% (6 of 108 reviews)
+
+- "Plays the same music/comedy over and over again" (1 stars, v2611.1, 2026-11-11, review 14779473168)
+- "2007 sound quality in 2026." (1 stars, v2611.1, 2026-11-10, review 14775739088)
+- "I have 900 songs in my collection and literally the same songs play over and over again why is that." (1 stars, v2611.1, 2026-11-06, review 14759127308)
+
+### update_regression: 6% (6 of 108 reviews)
 
 - "Removed funds 3 times did not have active account?" (1 stars, v2611.1, 2026-11-15, review 14793679547)
 - "The last update has cause carplay graphics and thumbs up and down buttons to not display as well as album cover art." (3 stars, v2611.1, 2026-11-15, review 14793561311)
 - "Too many ads, please go back to how you used to be why does everything have to have ads?" (3 stars, v2611.1, 2026-11-06, review 14757429313)
 
-### sync_data_loss: 2% (2 of 108 reviews)
-
-- "Deleted account." (1 stars, v2611.1, 2026-11-14, review 14790059246)
-- "Lost songs" (2 stars, v2610.2, 2026-10-23, review 14701671215)
-
-### Matched no theme: 34% (37 of 108 reviews)
+### Matched no theme: 18% (19 of 108 reviews)
 
 The 8 newest. If a pattern shows up here, the theme list is missing it.
 
 - "mason. gonterman" (3 stars, v2611.1, 2026-11-14, review 14790520584)
-- "Terrible download. Wasted will never amount Spotify" (1 stars, v2611.1, 2026-11-14, review 14789529096)
-- "Deez adds SUCK. Too much adds, playing totally different artists on radios" (1 stars, v2611.1, 2026-11-13, review 14786706672)
 - "Wonderful variety and mixture of great music. THANK YOU for playing Great Music" (3 stars, v2611.1, 2026-11-13, review 14784692237)
-- "Skips. Pandora would just automatically start skipping songs out of my control until skips were exhausted.  Frustrating." (2 stars, v2611.1, 2026-11-13, review 14785874338)
-- "Continues to stop playing. After each song and or ad, the app stops playing and I have to hit play or close app after each song. Tried deleting and reinstalling app but that didn’t work. App needs upd..." (1 stars, v2611.1, 2026-11-12, review 14781662346)
-- "Repeats everything. Plays the same music/comedy over and over again" (1 stars, v2611.1, 2026-11-11, review 14779473168)
 - "AD APP. AD APP THAT SOMETIMES PLAYS MUSIC" (1 stars, v2611.1, 2026-11-10, review 14775632599)
+- "Smooth and romantic. 5 stars" (1 stars, v2611.1, 2026-11-10, review 14772974702)
+- "Me. Play newer music" (2 stars, v2611.1, 2026-11-07, review 14762963470)
+- "Música nueva. Saludos…. He notado que no tienen tanta variedad de canciones y géneros, como Blues y últimamente estoy escuchando la misma música !!!" (3 stars, v2611.1, 2026-11-06, review 14760643268)
+- "Greed. Greedy company as usual" (1 stars, v2611.1, 2026-11-06, review 14757829150)
+- "Status. Not really sure what it’s going on with Pandora right now but it’s not letting me listen to any of my music on my phone. I’m pretty upset." (1 stars, v2611.1, 2026-11-06, review 14757456890)
 
 ## SoundCloud
 
-### ads: 27% (17 of 62 reviews)
+### ads: 37% (23 of 62 reviews)
 
+- "I chose 3 stars because it’s a good app but there’s so MANY adds and I understand that you could just buy it to where you don’t have to hear the adds but it’s so many to the point where it’s getting a" (2 stars, v8.86.0, 2026-11-15, review 14793544447)
 - "ads" (1 stars, v8.86.0, 2026-11-13, review 14786808442)
 - "Used to love it, but now there’s three ads after every few songs." (2 stars, v8.86.0, 2026-11-13, review 14784896375)
-- "2min of Ads between songs" (1 stars, v8.86.0, 2026-11-12, review 14782048098)
 
-### pricing_paywall: 18% (11 of 62 reviews)
+### pricing_paywall: 19% (12 of 62 reviews)
 
 - "I’ve been a SoundCloud subscriber for many years." (2 stars, v8.86.0, 2026-11-14, review 14790022956)
+- "Hate how it’s a limited on how many songs you can like when you tryna add dem to a playlist" (3 stars, v8.86.0, 2026-11-12, review 14783531647)
 - "theyve also put almost every Avicii song behind a paywall." (1 stars, v8.86.0, 2026-11-12, review 14782155352)
-- "Ads after every song (-1 star) Ads don't load, so I listen to 2 minutes of silence between songs (-1 star) When I add a song, I get a white screen with a message like "request to connect a device" and" (1 stars, v8.86.0, 2026-11-09, review 14768978396)
 
-### bugs_crashes: 11% (7 of 62 reviews)
+### bugs_crashes: 13% (8 of 62 reviews)
 
+- "And now I’m stuck here with some music that I can’t even listen to because it’s not here." (2 stars, v8.86.0, 2026-11-11, review 14780029076)
 - "SoundCloud keeps returning an error when I try to create an account ." (1 stars, v8.85.0, 2026-11-08, review 14767437487)
 - "this app has too many bugs and it glitches so much that it signs me out and i have to redownload my music offline again and again." (1 stars, v8.85.0, 2026-11-08, review 14765765518)
-- "Not working" (1 stars, v8.85.0, 2026-11-07, review 14763298882)
+
+### missing_feature: 3% (2 of 62 reviews)
+
+- "But lately the app has been increasingly flooded with bland, underwhelming AI-generated music with seemingly no options to filter it from your feed." (2 stars, v8.86.0, 2026-11-12, review 14784107823)
+- "Coming from Spotify, it is missing a few features like custom equalizing and client-side volume adjustment, which was a huge part of why I stayed with Spotify so long." (3 stars, v8.84.0, 2026-10-29, review 14725877488)
 
 ### account_login: 2% (1 of 62 reviews)
 
 - "i love soundcloud buy they gotta ban me from liking songs brih" (1 stars, v8.85.0, 2026-11-02, review 14742156661)
 
-### missing_feature: 2% (1 of 62 reviews)
-
-- "Coming from Spotify, it is missing a few features like custom equalizing and client-side volume adjustment, which was a huge part of why I stayed with Spotify so long." (3 stars, v8.84.0, 2026-10-29, review 14725877488)
-
-### Matched no theme: 34% (21 of 62 reviews)
+### Matched no theme: 21% (13 of 62 reviews)
 
 The 8 newest. If a pattern shows up here, the theme list is missing it.
 
-- "Just read. I chose 3 stars because it’s a good app but there’s so MANY adds and I understand that you could just buy it to where you don’t have to hear the adds but it’s so many to the point where it’..." (2 stars, v8.86.0, 2026-11-15, review 14793544447)
 - "They are getting worse and worse. Constantly removing features and degrading the UI, now you can not even start a station based on a song, suckkkzz" (2 stars, v8.86.0, 2026-11-14, review 14791892393)
-- "Hate how it’s a limited on how many songs you can like when you tryna add dem to a playlist. !" (3 stars, v8.86.0, 2026-11-12, review 14783531647)
-- "s0undcl0ud:/. would be sm better if there wasn’t adds 😫" (3 stars, v8.86.0, 2026-11-12, review 14783309137)
-- "Someone give me 16 dollars plz 🥺. I miss YouTube music. And now I’m stuck here with some music that I can’t even listen to because it’s not here. I hate it here 🫩" (2 stars, v8.86.0, 2026-11-11, review 14780029076)
 - "No sirve. Esta aplicación no sirve no te deja crear cuenta no la descarguen es estafa" (1 stars, v8.86.0, 2026-11-10, review 14775339719)
-- "Men. There is adds" (3 stars, v8.86.0, 2026-11-10, review 14775243599)
 - "It’s ok. SoundCloud is great but i just don’t wanna pay so yeah" (3 stars, v8.86.0, 2026-11-09, review 14770543771)
+- "Удалить 3goth2002. Удалите артиста 3goth2002" (1 stars, v8.86.0, 2026-11-09, review 14768916386)
+- "Difícil el escuchar algo. Se me hace difícil el poder escuchar canciones" (1 stars, v8.85.0, 2026-11-07, review 14761989121)
+- "Dj BlackJay. Alez" (3 stars, v8.85.0, 2026-11-06, review 14760384584)
+- "Exit. Stu1" (1 stars, v8.85.0, 2026-11-04, review 14750894305)
+- "Speaking for everyone. We all miss the old SoundCloud" (1 stars, v8.85.0, 2026-11-03, review 14747242975)
 
 ## Spotify
 
-### pricing_paywall: 31% (43 of 138 reviews)
+### ads: 31% (43 of 138 reviews)
+
+- "Too many ads u can’t even enjoy" (1 stars, v9.2.0, 2026-11-15, review 14796655227)
+- "Commercial rotation" (3 stars, v9.2.0, 2026-11-15, review 14796556357)
+- "It a great app, but just wayyyyy to many ads!!" (3 stars, v9.2.0, 2026-11-15, review 14796473403)
+
+### pricing_paywall: 30% (41 of 138 reviews)
 
 - "Pagar premium e igual te ponen publicidad en los podcast." (1 stars, v9.2.0, 2026-11-16, review 14796779639)
 - "It’s an alright app until you gets 5 ads after 2 songs, so stupid, you shouldn’t have to pay to listen to music peacefully, the app is so premium based" (1 stars, v9.2.0, 2026-11-15, review 14796622511)
 - "This app is honestly horrible without premium." (3 stars, v9.2.0, 2026-11-15, review 14796593132)
-
-### ads: 22% (30 of 138 reviews)
-
-- "Too many ads u can’t even enjoy" (1 stars, v9.2.0, 2026-11-15, review 14796655227)
-- "It a great app, but just wayyyyy to many ads!!" (3 stars, v9.2.0, 2026-11-15, review 14796473403)
-- "Ads, ads and MORE ADDDDDSSSSSS" (1 stars, v9.2.0, 2026-11-15, review 14796381903)
 
 ### bugs_crashes: 7% (9 of 138 reviews)
 
@@ -219,50 +222,56 @@ The 8 newest. If a pattern shows up here, the theme list is missing it.
 - "Idk what glitch" (2 stars, v9.2.0, 2026-11-15, review 14795903043)
 - "I’ve used Spotify for a decade and it has never performed so poorly - the last month+ has had incessant crashing and reloading, the app freezing or refusing to load my playlists….it’s ridiculous and n" (2 stars, v9.2.0, 2026-11-15, review 14795737831)
 
-### update_regression: 4% (6 of 138 reviews)
+### update_regression: 4% (5 of 138 reviews)
 
 - "After a single song plays, EVERY SINGLE ONE that I had removed, just moments before, will be right back into the queue, like I hadn’t removed them at all." (2 stars, v9.2.0, 2026-11-15, review 14796758076)
-- "Can you make it so that we can move our song in Que around and maybe make our Que a playlist or keep Que history so we can go back to it" (3 stars, v9.2.0, 2026-11-15, review 14796556357)
 - "Opening my queue every time after I add something to it is a terrible update." (1 stars, v9.2.0, 2026-11-15, review 14795427057)
+- "ever since you fired your employees and replaced them with AI, not only me but several people I know are having problems with this app lately." (1 stars, v9.2.0, 2026-11-15, review 14794727290)
 
-### content_quality: 2% (3 of 138 reviews)
+### content_quality: 3% (4 of 138 reviews)
 
+- "honestly it’s a good music app but literally i get 4 ads after listening to 3 songs, and i feel like the same songs keep repeating in my playlist when i have 120+ songs" (3 stars, v9.2.0, 2026-11-15, review 14796244531)
 - "The cover for covers are boring and look awful side by side." (2 stars, v9.2.0, 2026-11-15, review 14795080698)
 - "i hate the algorithm and everything spotify pushes me to listen to." (1 stars, v9.2.0, 2026-11-15, review 14794274480)
-- "Shuffle algorithm needs significant improvements." (1 stars, v9.2.0, 2026-11-15, review 14793760554)
 
-### Matched no theme: 28% (39 of 138 reviews)
+### Matched no theme: 19% (26 of 138 reviews)
 
 The 8 newest. If a pattern shows up here, the theme list is missing it.
 
 - "Best music app ever!. I was able to find so many styles of music, I made SO Many playlists and honestly it’s just very easy to use!" (1 stars, v9.2.0, 2026-11-15, review 14796544499)
-- "Free Palestine. Free Palestine" (1 stars, v9.2.0, 2026-11-15, review 14795238979)
-- "Adds. Bro adds are way too long and come to often" (3 stars, v9.2.0, 2026-11-15, review 14793821738)
-- "Too Many Adds. Too Many Adds" (1 stars, v9.2.0, 2026-11-15, review 14793931928)
+- "Lame. Spotify is lame" (1 stars, v9.2.0, 2026-11-15, review 14795628763)
 - "Fools. App sucks after the layoffs and AI adoption" (1 stars, v9.2.0, 2026-11-15, review 14794136448)
-- "Can’t control volume with iPhone physical volume rocker. Honestly, one of the most important features on a music player is volume control, and Spotify’s is so flakey that half the time you can’t chang..." (2 stars, v9.2.0, 2026-11-15, review 14794193505)
-- "To many danm adds. Well u read the title" (3 stars, v9.2.0, 2026-11-15, review 14794259798)
 - "Shuffle doesn’t Shuffle. From a programmatic perspective the backend platform and engineering is garbage. The app shuffle toggle in “Likes” playlist does not shuffle. I have over 1,100 songs in my “li..." (1 stars, v9.2.0, 2026-11-15, review 14794713668)
+- "Anuncios. Muchos anuncios no good" (1 stars, v9.2.0, 2026-11-15, review 14794746949)
+- "Dude I hate Spotify. Spotify sucks" (1 stars, v9.2.0, 2026-11-15, review 14795008159)
+- "Completely free!. Apple Music= pay a million dollars to listen to one song. Spotify= completely free. I got spotify cuz like it’s completely free like i can listen to whatever song i want without havi..." (3 stars, v9.2.0, 2026-11-15, review 14795021407)
+- "AI slop. I’ve used Spotify for a decade at this point, and I’m honestly really becoming tired of the increasing amount of AI-generated garbage being fraudulently released under my favorite artists’ na..." (3 stars, v9.2.0, 2026-11-15, review 14795072566)
 
 ## YouTube Music
 
-### pricing_paywall: 25% (94 of 373 reviews)
+### pricing_paywall: 29% (107 of 373 reviews)
 
 - "It’s like they’re trying make us cancel our subscription, and I guess it’s time I should." (2 stars, v9.46, 2026-11-15, review 14796513839)
-- "I wish you guys would hurry and fix app for duo users…I switched to Apple Music cause of that and cancelled my subscription I mean even Kroger app is optimized for iPhone Duo" (1 stars, v9.46, 2026-11-15, review 14795325539)
-- "App is unusable after recent update, even with Premium." (1 stars, v9.45, 2026-11-14, review 14792564116)
+- "Looks terrible on iPhone duos" (1 stars, v9.46, 2026-11-15, review 14796226017)
+- "ARE YOU EVER UPGRADING TO THE DUO PHONE WHY IS THIS TAKING SO LONG!!!!" (1 stars, v9.46, 2026-11-15, review 14795536116)
 
-### bugs_crashes: 16% (60 of 373 reviews)
+### bugs_crashes: 20% (73 of 373 reviews)
 
+- "The problem is playback when the device is left idle." (2 stars, v9.45, 2026-11-15, review 14793838741)
 - "In addition, recently there appears to be a playlist add bug." (3 stars, v9.45, 2026-11-15, review 14793658939)
 - "when you try and play a song and then click on another song it'll play the song for a few seconds and then the app will immediately crash." (1 stars, v9.45, 2026-11-14, review 14792502261)
-- "this app doesn't work  well" (2 stars, v9.45, 2026-11-14, review 14789447759)
 
-### update_regression: 13% (49 of 373 reviews)
+### update_regression: 11% (41 of 373 reviews)
 
 - "nice update, fixed shuffle functionality." (3 stars, v9.46, 2026-11-15, review 14796747752)
-- "Pathetic this isn’t updated for the Duo." (1 stars, v9.46, 2026-11-15, review 14794964327)
-- "They need to update the app for iPhone Duo" (1 stars, v9.45, 2026-11-14, review 14791421709)
+- "Also the shuffle function needs to be updated." (3 stars, v9.45, 2026-11-13, review 14786470527)
+- "YouTube has gone downhill it won’t update your music I’m sick of it" (1 stars, v9.45, 2026-11-12, review 14783517489)
+
+### content_quality: 5% (20 of 373 reviews)
+
+- "YouTube has by far the worst algorithm and your “super mix” just repeats the same 10 songs ad nauseam." (2 stars, v9.45, 2026-11-13, review 14785415747)
+- "This app only plays the songs I have  liked over and over and doesn’t tailor my content preferences to newer songs that I might like" (2 stars, v9.45, 2026-11-09, review 14772006714)
+- "It keeps playing the same songs over and over again on shuffle, instead of randomly playing songs from my entire music library." (1 stars, v9.45, 2026-11-08, review 14767668405)
 
 ### ads: 4% (16 of 373 reviews)
 
@@ -270,22 +279,16 @@ The 8 newest. If a pattern shows up here, the theme list is missing it.
 - "i’d rather take the commercials." (1 stars, v9.45, 2026-11-13, review 14786555119)
 - "Super frustrating the amount of commercials and how much it glitches the stream." (2 stars, v9.45, 2026-11-13, review 14785946733)
 
-### customer_support: 3% (11 of 373 reviews)
-
-- "Duo support" (1 stars, v9.46, 2026-11-15, review 14796226017)
-- "Just support the Duo like the regular YouTube app." (1 stars, v9.46, 2026-11-15, review 14795418550)
-- "IPhone Duo support" (3 stars, v9.46, 2026-11-15, review 14794879546)
-
-### Matched no theme: 27% (102 of 373 reviews)
+### Matched no theme: 17% (65 of 373 reviews)
 
 The 8 newest. If a pattern shows up here, the theme list is missing it.
 
-- "Duo. ARE YOU EVER UPGRADING TO THE DUO PHONE WHY IS THIS TAKING SO LONG!!!!" (1 stars, v9.46, 2026-11-15, review 14795536116)
-- "Old Problems New. The service is great, the app features are solid.  The problem is playback when the device is left idle.  When track ends, playback stops.  Waking device and trying to open app, it’s..." (2 stars, v9.45, 2026-11-15, review 14793838741)
-- "App widget wont appear on screen. The lock screen widget is no longer appearing on screen when the phone is powered off so i have to unlock the phone just to skip the song or even see whats playing at..." (1 stars, v9.45, 2026-11-14, review 14791657151)
-- "App Gets Stuck Sideways. App always goes to sideways mode and gets stuck.. deletes my progress on a podcast" (3 stars, v9.45, 2026-11-14, review 14790979099)
-- ".. i can’t even make a photo for my playlist photos and i don’t have any lyrics" (2 stars, v9.45, 2026-11-14, review 14790484305)
 - "Keeps updating my music playlists. STOP UPDATING MY MUSIC PLAYLIST!! I didnt ask for you guys to keep switching out the songs that im already willing to listen to on the playlist im currently playing!..." (3 stars, v9.45, 2026-11-13, review 14787826129)
-- "I just downloaded. it won’t load it’s completely blank" (1 stars, v9.45, 2026-11-13, review 14787590007)
 - "SHUFFLE PLAY. Fix The Shuffle Please" (2 stars, v9.45, 2026-11-13, review 14784471828)
+- "Garbage trash app. There’s no difference between Spotify and YouTube music, both are greedy apps that you can’t even play one song" (1 stars, v9.45, 2026-11-12, review 14784380698)
+- "Muy malo. Busco un artista y no sale todo sus canciones y me salí otro artista que no es la que busco y antes no era así, antes me salía el artista y todos sus canciones pero ahora ya no y cobran caro..." (1 stars, v9.45, 2026-11-12, review 14784137024)
+- "It is almost OK. I do not appreciate how it doesn’t play when your screen is locked, and it can be difficult to make a playlist." (2 stars, v9.45, 2026-11-12, review 14781985552)
+- "Random podcast. I do not listen to a single podcast on YouTube music why are podcasts at the very top of my homepage instead of my music this is dumb. I refuse to listen to any of your stupid podcast..." (1 stars, v9.45, 2026-11-12, review 14781369300)
+- "This is a terrible app. Spotify and Apple Music have been running laps around this app. Frequently songs will disappear from my play lists for no reason." (1 stars, v9.45, 2026-11-11, review 14780127409)
+- "Fire the people who work on the ui. They constantly change little things about the ui until the app becomes the ship of theseus, all without informing you. You’ll wake up one day to find that you sudd..." (1 stars, v9.45, 2026-11-11, review 14778860034)
 
