@@ -1,1 +1,1 @@
---seed "Apple Music" --keyword "music streaming" --keyword "songs" --exclude "Shazam" --top 5
+--app "1108187390:Apple Music" --app "324684580:Spotify" --app "1017492454:YouTube Music" --app "284035177:Pandora" --app "510855668:Amazon Music" --app "336353151:SoundCloud"
