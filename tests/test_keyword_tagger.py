@@ -32,6 +32,10 @@ def test_every_theme_but_other_has_keywords():
         ("My downloaded songs vanish when I go offline.", "sync_data_loss"),
         ("It plays the same songs on repeat and the recommendations are bad.", "content_quality"),
         ("You can only like a limited number of songs.", "pricing_paywall"),
+        # version 3
+        ("Please undo the color change.", "update_regression"),
+        ("You cannot play a song without paying.", "pricing_paywall"),
+        ("The layout looks terrible on my Duo phone.", "ux_confusing"),
     ],
 )
 def test_reviews_get_the_expected_theme(text, theme):
