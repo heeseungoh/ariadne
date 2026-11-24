@@ -129,6 +129,10 @@ which is git-ignored so raw review text is never republished.
 | Pack | Question | Deliverable |
 |---|---|---|
 | `weakness_map` | Where is each competitor losing users? | Battlecard per competitor |
+| `messaging_miner` | What do happy users value, in their own words? | Praise themes with quotes, for messaging |
+
+`weakness_map` reads 1-3 star reviews; `messaging_miner` reads 4-5 star reviews. A case study runs
+the packs listed in its `packs.txt` (just `weakness_map` if there isn't one).
 
 A pack is a YAML file in `ariadne_pmm/packs/`. To add one, copy `weakness_map.yaml`, change
 the question, ratings and themes, and pass its path to `ariadne-pmm run`.
@@ -209,7 +213,7 @@ about 95% confidence). For example: is Apple Music's redesign backlash fading, o
 - [x] First case studies: BeReal (test run) and Apple Music
 - [x] Accuracy check tooling (`sample` and `agree`)
 - [ ] Run the accuracy check: label 100 Apple Music reviews by hand
-- [ ] `messaging_miner` pack: what happy users say, in their words
+- [x] `messaging_miner` pack: what happy users say, in their words
 - [x] Compare two runs over time (`compare`)
 - [ ] Streamlit demo
 
