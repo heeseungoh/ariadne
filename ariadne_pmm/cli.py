@@ -14,6 +14,7 @@ import pandas as pd
 
 from ariadne_pmm.analyze.accuracy import agreement, draw_sample, render_agreement
 from ariadne_pmm.analyze.aggregate import build_frame, plan_samples, theme_shares
+from ariadne_pmm.analyze.compare import compare_runs, render_comparison
 from ariadne_pmm.analyze.keyword_tagger import tag_reviews_by_keywords
 from ariadne_pmm.analyze.tagger import DEFAULT_MODEL, tag_reviews
 from ariadne_pmm.ingest.app_store import fetch_reviews
@@ -181,6 +182,12 @@ def build_parser() -> argparse.ArgumentParser:
     agree.add_argument("--pack", default="weakness_map")
     agree.add_argument("--out", type=Path, help="write the report here instead of printing it")
 
+    compare = commands.add_parser("compare", help="compare two runs of the same pack")
+    compare.add_argument("old", type=Path, help="the earlier run's snapshot CSV")
+    compare.add_argument("new", type=Path, help="the later run's snapshot CSV")
+    compare.add_argument("--pack", default="weakness_map")
+    compare.add_argument("--out", type=Path, help="write the report here instead of printing it")
+
     discover = commands.add_parser("discover", help="find an app's competitors")
     discover.add_argument("seed", help="App Store ID or app name, e.g. 1459645446 or BeReal")
     discover.add_argument(
@@ -280,6 +287,24 @@ def main(argv: list[str] | None = None) -> int:
         sheet = pd.read_csv(args.sheet, dtype={"review_id": str})
         key = pd.read_csv(key_path, dtype={"review_id": str})
         report = render_agreement(agreement(sheet, key, list(load_pack(args.pack).themes)))
+        if args.out:
+            args.out.write_text(report)
+            print(f"Report written to {args.out}")
+        else:
+            print(report)
+        return 0
+
+    if args.command == "compare":
+        old = pd.read_csv(args.old, dtype={"review_id": str})
+        new = pd.read_csv(args.new, dtype={"review_id": str})
+        diff = compare_runs(old, new, load_pack(args.pack))
+        report = render_comparison(
+            diff,
+            args.old.stem,
+            args.new.stem,
+            only_old=sorted(set(old["app_name"]) - set(new["app_name"])),
+            only_new=sorted(set(new["app_name"]) - set(old["app_name"])),
+        )
         if args.out:
             args.out.write_text(report)
             print(f"Report written to {args.out}")
