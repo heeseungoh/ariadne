@@ -181,6 +181,18 @@ ariadne-pmm agree data/accuracy/weakness_map-2026-11-18-sheet.csv --out accuracy
 The report gives overall agreement, precision and recall per theme, and the most common mix-ups.
 The same seed always draws the same sample, so a second person can label the same reviews.
 
+## Tracking a market over time
+
+Re-run a study later and compare the two runs:
+
+```bash
+ariadne-pmm compare data/snapshots/weakness_map-2026-11-18.csv data/snapshots/weakness_map-2026-12-18.csv
+```
+
+It lists each theme's share before and after, and marks a change **likely real** only when both
+runs have at least 30 reviews and the change is bigger than sample noise (two-proportion z-test,
+about 95% confidence). For example: is Apple Music's redesign backlash fading, or just noise?
+
 ## Limits
 
 - Reviews come from existing users with strong opinions. They say little about people who never
@@ -198,7 +210,7 @@ The same seed always draws the same sample, so a second person can label the sam
 - [x] Accuracy check tooling (`sample` and `agree`)
 - [ ] Run the accuracy check: label 100 Apple Music reviews by hand
 - [ ] `messaging_miner` pack: what happy users say, in their words
-- [ ] Compare two snapshots over time
+- [x] Compare two runs over time (`compare`)
 - [ ] Streamlit demo
 
 ## Development
