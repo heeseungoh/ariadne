@@ -54,6 +54,27 @@ def parse_feed(payload: dict, app_id: str, app_name: str) -> list[Review]:
     return reviews
 
 
+def _get_page(http, url: str, retries: int, sleep) -> dict | None:
+    """One page of the feed, retried on errors and on empty pages.
+
+    Apple's feed sometimes returns an error or an empty page part-way through an
+    app's reviews and then serves the same page fine a moment later. Returns
+    None when the page is still unusable after the retries.
+    """
+    for attempt in range(retries + 1):
+        if attempt:
+            sleep(2**attempt)
+        try:
+            response = http.get(url, timeout=30)
+            if response.status_code == 200:
+                payload = response.json()
+                if (payload.get("feed") or {}).get("entry"):
+                    return payload
+        except (requests.RequestException, ValueError):
+            pass
+    return None
+
+
 def fetch_reviews(
     app_id: str,
     app_name: str,
@@ -61,24 +82,27 @@ def fetch_reviews(
     pages: int = MAX_PAGES,
     session: requests.Session | None = None,
     pause: float = 0.5,
+    retries: int = 2,
+    sleep=time.sleep,
 ) -> list[Review]:
-    """Fetch up to `pages` pages of the most recent reviews for one app."""
+    """Fetch up to `pages` pages of the most recent reviews for one app.
+
+    Stops at the first page that is still empty or failing after `retries` retries.
+    """
     http = session or requests.Session()
     seen: set[str] = set()
     reviews: list[Review] = []
 
     for page in range(1, min(pages, MAX_PAGES) + 1):
         url = FEED_URL.format(country=country, page=page, app_id=app_id)
-        response = http.get(url, timeout=30)
-        if response.status_code != 200:
-            break
-        batch = parse_feed(response.json(), app_id, app_name)
+        payload = _get_page(http, url, retries, sleep)
+        batch = parse_feed(payload, app_id, app_name) if payload else []
         if not batch:
             break
         for review in batch:
             if review.review_id not in seen:
                 seen.add(review.review_id)
                 reviews.append(review)
-        time.sleep(pause)
+        sleep(pause)
 
     return reviews

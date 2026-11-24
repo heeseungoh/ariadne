@@ -1,6 +1,8 @@
 import json
 from pathlib import Path
 
+import requests
+
 from ariadne_pmm.ingest.app_store import fetch_reviews, parse_feed
 
 FIXTURE = json.loads((Path(__file__).parent / "fixtures" / "app_store_page.json").read_text())
@@ -45,8 +47,50 @@ class FakeSession:
         return FakeResponse(FIXTURE if "page=1/" in url else {"feed": {}})
 
 
-def test_fetch_reviews_stops_at_first_empty_page():
+def no_sleep(seconds):
+    pass
+
+
+def test_fetch_reviews_stops_at_first_empty_page_after_retrying_it():
     session = FakeSession()
-    reviews = fetch_reviews("123", "Demo", session=session, pause=0)
+    reviews = fetch_reviews("123", "Demo", session=session, sleep=no_sleep)
     assert len(reviews) == 2
-    assert session.calls == 2
+    assert session.calls == 4  # page 1, then page 2 tried 3 times
+
+
+class FlakySession:
+    """Page 2 fails twice (error, then empty) before it works; page 3 is the real end."""
+
+    def __init__(self):
+        self.page2_calls = 0
+
+    def get(self, url, timeout):
+        if "page=1/" in url:
+            return FakeResponse(FIXTURE)
+        if "page=2/" in url:
+            self.page2_calls += 1
+            if self.page2_calls == 1:
+                return FakeResponse({}, status_code=503)
+            if self.page2_calls == 2:
+                return FakeResponse({"feed": {}})
+            page = json.loads(json.dumps(FIXTURE))
+            for i, entry in enumerate(page["feed"]["entry"]):
+                entry["id"] = {"label": f"2{i}"}
+            return FakeResponse(page)
+        return FakeResponse({"feed": {}})
+
+
+def test_fetch_reviews_retries_a_failed_page_and_keeps_going():
+    session = FlakySession()
+    reviews = fetch_reviews("123", "Demo", session=session, sleep=no_sleep)
+    assert [r.review_id for r in reviews] == ["1001", "1002", "20", "21"]
+    assert session.page2_calls == 3
+
+
+class BrokenSession:
+    def get(self, url, timeout):
+        raise requests.ConnectionError("network down")
+
+
+def test_fetch_reviews_survives_network_errors():
+    assert fetch_reviews("123", "Demo", session=BrokenSession(), sleep=no_sleep) == []
