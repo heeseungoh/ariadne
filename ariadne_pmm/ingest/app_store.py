@@ -18,6 +18,12 @@ FEED_URL = (
 )
 MAX_PAGES = 10
 
+# Apple's feed throttles fast clients: at 0.5s between pages, a run of 6 apps often
+# had one app stop after 50 of 500 reviews, a different app each run. Slower pages
+# and longer waits before a retry avoid it, at the cost of a slower pull.
+PAGE_PAUSE = 2.0  # seconds between pages
+RETRY_WAIT = 10.0  # seconds before the first retry, doubling after that
+
 
 def _label(entry: dict, key: str) -> str:
     value = entry.get(key) or {}
@@ -63,7 +69,7 @@ def _get_page(http, url: str, retries: int, sleep) -> dict | None:
     """
     for attempt in range(retries + 1):
         if attempt:
-            sleep(2**attempt)
+            sleep(RETRY_WAIT * 2 ** (attempt - 1))
         try:
             response = http.get(url, timeout=30)
             if response.status_code == 200:
@@ -81,8 +87,8 @@ def fetch_reviews(
     country: str = "us",
     pages: int = MAX_PAGES,
     session: requests.Session | None = None,
-    pause: float = 0.5,
-    retries: int = 2,
+    pause: float = PAGE_PAUSE,
+    retries: int = 3,
     sleep=time.sleep,
 ) -> list[Review]:
     """Fetch up to `pages` pages of the most recent reviews for one app.

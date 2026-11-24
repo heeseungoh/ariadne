@@ -202,8 +202,9 @@ about 95% confidence). For example: is Apple Music's redesign backlash fading, o
 - Reviews come from existing users with strong opinions. They say little about people who never
   downloaded the app.
 - Apple's feed returns only the most recent ~500 reviews per country, and it's not always
-  reliable. Sometimes it returns fewer, like 350 of Amazon Music's 500 on one run. Ariadne retries
-  a failed page twice before giving up, and prints a note when an app comes back short.
+  reliable. Sometimes it returns fewer, like 350 of Amazon Music's 500 on one run. Ariadne waits 2
+  seconds between pages and retries a failed page 3 times (after 10, 20 and 40 seconds), and
+  prints a note when an app still comes back short. A full run of 6 apps takes a few minutes.
 - Competitor discovery is a heuristic built on App Store search. It can miss a competitor that
   doesn't use the same words, or include an app that only shares a keyword. Check the list.
 - The output is a first draft for a marketer to edit, not finished positioning.
