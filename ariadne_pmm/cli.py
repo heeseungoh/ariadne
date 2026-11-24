@@ -65,6 +65,12 @@ def collect_reviews(
         stars = Counter(r.rating for r in pulled)
         by_star = ", ".join(f"{star} star: {stars.get(star, 0)}" for star in range(1, 6))
         print(f"{name}: pulled {len(pulled)} reviews ({by_star})")
+        wanted = min(pages, 10) * 50
+        if len(pulled) < wanted:
+            print(
+                f"  Note: {name} returned {len(pulled)} of up to {wanted} reviews. Either the app "
+                "has fewer recent reviews, or Apple's feed stopped early. Re-run later to check."
+            )
         raw = data_dir / "raw" / f"{app_id}.json"
         raw.parent.mkdir(parents=True, exist_ok=True)
         raw.write_text(json.dumps([r.to_dict() for r in pulled], indent=2))

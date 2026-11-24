@@ -184,3 +184,20 @@ def test_exclude_is_accepted_by_every_command():
         ["run", "weakness_map", "--seed", "Apple Music", "--exclude", "Shazam"],
     ):
         assert parser.parse_args(argv).exclude == ["Shazam"]
+
+
+def test_collect_reviews_notes_a_short_pull(tmp_path, capsys):
+    def short_fetch(app_id, name, country, pages):
+        return [Review(str(i), app_id, name, 1, "t", "x", "1.0", "2026-10-01") for i in range(350)]
+
+    collect_reviews([("9", "Amazon Music")], "us", 10, tmp_path, fetch=short_fetch)
+    out = capsys.readouterr().out
+    assert "Amazon Music returned 350 of up to 500 reviews" in out
+
+
+def test_collect_reviews_is_quiet_for_a_full_pull(tmp_path, capsys):
+    def full_fetch(app_id, name, country, pages):
+        return [Review(str(i), app_id, name, 1, "t", "x", "1.0", "2026-10-01") for i in range(100)]
+
+    collect_reviews([("9", "Alpha")], "us", 2, tmp_path, fetch=full_fetch)
+    assert "Note:" not in capsys.readouterr().out
