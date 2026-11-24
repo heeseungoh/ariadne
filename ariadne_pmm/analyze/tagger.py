@@ -21,7 +21,7 @@ BATCH_SIZE = 20
 
 SYSTEM_PROMPT = """You label customer reviews for a product marketing team.
 
-For each review, pick the ONE theme that best describes the reviewer's main complaint.
+For each review, pick the ONE theme that best describes the reviewer's {focus}.
 Use only these theme keys:
 
 {themes}
@@ -92,7 +92,7 @@ def tag_reviews(
     tags = load_cache(cache_path) if cache_path else {}
     todo = [r for r in reviews if r.review_id not in tags]
     system = SYSTEM_PROMPT.format(
-        themes="\n".join(f"- {key}: {desc}" for key, desc in pack.themes.items())
+        focus=pack.focus, themes="\n".join(f"- {key}: {desc}" for key, desc in pack.themes.items())
     )
 
     for i in range(0, len(todo), batch_size):

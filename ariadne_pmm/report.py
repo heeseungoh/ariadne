@@ -88,7 +88,7 @@ def render_battlecard(
         "theme counts; below that its reviews are listed without themes."
     )
     lines = [
-        f"# Competitor weakness map ({run_date})",
+        f"# {pack.title} ({run_date})",
         "",
         f"**Question:** {pack.question}",
         "",
@@ -110,7 +110,7 @@ def render_battlecard(
         share_grid = shares.pivot(index="theme", columns="app_name", values="share").fillna(0.0)
         order = share_grid.max(axis=1).sort_values(ascending=False).index
 
-        lines += ["## Complaints by theme", ""]
+        lines += [f"## {pack.subject.capitalize()} by theme", ""]
         lines.append("| Theme | " + " | ".join(f"{app} (n={totals[app]})" for app in apps) + " |")
         lines.append("|---|" + "---|" * len(apps))
         for theme in order:

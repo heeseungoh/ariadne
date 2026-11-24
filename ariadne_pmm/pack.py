@@ -22,6 +22,9 @@ class Pack:
     min_sample: int
     themes: dict[str, str]
     keywords: dict[str, tuple[str, ...]] = field(default_factory=dict)
+    title: str = "Research report"
+    subject: str = "reviews"
+    focus: str = "main point"
 
     def sample_tier(self, n: int) -> str:
         """How much an app's sample of n reviews can support: none, list, counts or full."""
@@ -80,4 +83,7 @@ def load_pack(name_or_path: str) -> Pack:
         min_sample=int(raw.get("min_sample", 30)),
         themes=themes,
         keywords=keywords,
+        title=str(raw.get("title", raw["name"].replace("_", " ").capitalize())),
+        subject=str(raw.get("subject", "reviews")),
+        focus=str(raw.get("focus", "main point")),
     )
