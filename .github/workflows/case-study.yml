@@ -1,4 +1,5 @@
 # Runs every case study this pull request touches and commits the reports to its branch.
+# A study re-runs only when its args.txt changed after its latest report, or it has no report.
 # A study is a folder in case-studies/ with an args.txt holding the options for
 # `ariadne-pmm run weakness_map`. Uses the free keyword labeller: no API key, no cost.
 # It writes to the branch, so it only runs for branches of this repository, never for forks.
@@ -39,6 +40,16 @@ jobs:
           studies=$(git diff --name-only "origin/$BASE_REF...HEAD" -- case-studies | cut -d/ -f2 | sort -u)
           for study in $studies; do
             [ -f "case-studies/$study/args.txt" ] || continue
+            # Re-run only when the settings changed after the latest report, so editing a
+            # study's write-up never moves its numbers. Delete the report to force a re-run.
+            if ls "case-studies/$study"/weakness_map-*.md >/dev/null 2>&1; then
+              args_commit=$(git log -1 --format=%H -- "case-studies/$study/args.txt")
+              report_commit=$(git log -1 --format=%H -- "case-studies/$study/weakness_map-*.md")
+              if git merge-base --is-ancestor "$args_commit" "$report_commit"; then
+                echo "== $study: settings unchanged since the last report, skipped" | tee -a run.log
+                continue
+              fi
+            fi
             echo "== $study" | tee -a run.log
             xargs ariadne-pmm run weakness_map --tagger keywords --out "case-studies/$study" \
               < "case-studies/$study/args.txt" 2>&1 | tee -a run.log
