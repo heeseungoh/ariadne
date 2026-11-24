@@ -1,0 +1,49 @@
+# Research pack: messaging miner
+# What do happy users value, in their own words? Reads 4-5 star reviews, so the
+# themes are reasons people like an app, and the quotes are raw material for messaging.
+name: messaging_miner
+version: 1
+question: What do happy users value, in their own words?
+deliverable: messaging angles
+
+title: What users love
+subject: praise
+focus: main reason for liking the app
+
+ratings: [4, 5]
+
+min_reviews: 10
+min_sample: 30
+
+themes:
+  ease_of_use: Easy, simple, intuitive, quick to learn
+  design: Looks good, clean interface, nice layout
+  reliability: Works without problems, stable, dependable
+  speed: Fast, quick, responsive
+  value_price: Worth the money, fair price, generous free version
+  no_ads: No ads, or few ads
+  content_library: Has everything they want, big selection, good content
+  recommendations: Finds things they like, good suggestions, personal
+  social_connection: Keeps them close to friends and family, sharing together
+  features: A specific feature they love
+  sound_quality: Audio or sound quality
+  customer_support: Helpful support or responsive team
+  other: Does not fit any theme above
+
+# Keyword rules for the free labeller. Same matching as the weakness map: a keyword
+# matches from the start of a word, the theme with the most matches wins, ties go to
+# the theme listed first. Generic praise ("love it", "great app") matches nothing on
+# purpose, because it says nothing a message could use.
+keywords:
+  ease_of_use: [easy, simple, intuitive, user friendly, user-friendly, straightforward, convenient, easy to use]
+  design: [design, beautiful, aesthetic, clean, layout, interface, look, sleek, gorgeous, colors, colours]
+  reliability: [reliable, never crash, no issues, no problems, works perfectly, works great, works well, stable, dependable, consistent]
+  speed: [fast, quick, instant, responsive, snappy, no lag]
+  value_price: [worth, price, affordable, value, cheap, money, free version, student, family plan]
+  no_ads: [no ads, ad free, ad-free, without ads, no commercials, few ads]
+  content_library: [library, selection, catalog, catalogue, every song, any song, all my, variety, podcasts, content, songs i]
+  recommendations: [recommend, discover, discovery, suggestion, personaliz, algorithm, playlists for me, daily mix, new music]
+  social_connection: [friends, family, connect, together, share, sharing, close to, stay in touch, bond]
+  features: [feature, lyrics, widget, offline, download, sleep timer, shuffle, queue, radio, carplay]
+  sound_quality: [sound quality, audio quality, lossless, dolby, spatial, hi-fi, hifi, crisp, clarity]
+  customer_support: [support, customer service, helpful team, responded, fixed my]

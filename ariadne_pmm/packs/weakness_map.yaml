@@ -5,6 +5,11 @@ version: 3
 question: Where is each competitor losing users?
 deliverable: battlecard
 
+# How the report and the Claude labeller talk about this pack's reviews.
+title: Competitor weakness map
+subject: complaints
+focus: main complaint
+
 # Which reviews this pack reads.
 ratings: [1, 2, 3]
 
