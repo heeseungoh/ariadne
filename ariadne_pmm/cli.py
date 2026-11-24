@@ -10,6 +10,9 @@ from collections import Counter
 from datetime import datetime, timezone
 from pathlib import Path
 
+import pandas as pd
+
+from ariadne_pmm.analyze.accuracy import agreement, draw_sample, render_agreement
 from ariadne_pmm.analyze.aggregate import build_frame, plan_samples, theme_shares
 from ariadne_pmm.analyze.keyword_tagger import tag_reviews_by_keywords
 from ariadne_pmm.analyze.tagger import DEFAULT_MODEL, tag_reviews
@@ -163,6 +166,21 @@ def build_parser() -> argparse.ArgumentParser:
 
     commands.add_parser("packs", help="list the built-in research packs")
 
+    sample = commands.add_parser(
+        "sample", help="draw reviews from a run for hand labelling (accuracy check)"
+    )
+    sample.add_argument("snapshot", type=Path, help="a run's snapshot CSV in data/snapshots/")
+    sample.add_argument("--n", type=int, default=100)
+    sample.add_argument("--seed", type=int, default=7, help="same seed, same sample")
+    sample.add_argument("--out", type=Path, default=Path("data/accuracy"))
+    sample.add_argument("--pack", default="weakness_map", help="pack the run used")
+
+    agree = commands.add_parser("agree", help="compare your labels with the tool's")
+    agree.add_argument("sheet", type=Path, help="the labelled sheet from `sample`")
+    agree.add_argument("--key", type=Path, help="the key from `sample` (default: next to sheet)")
+    agree.add_argument("--pack", default="weakness_map")
+    agree.add_argument("--out", type=Path, help="write the report here instead of printing it")
+
     discover = commands.add_parser("discover", help="find an app's competitors")
     discover.add_argument("seed", help="App Store ID or app name, e.g. 1459645446 or BeReal")
     discover.add_argument(
@@ -241,6 +259,32 @@ def main(argv: list[str] | None = None) -> int:
     if args.command == "packs":
         for name in available_packs():
             print(f"{name}: {load_pack(name).question}")
+        return 0
+
+    if args.command == "sample":
+        snapshot = pd.read_csv(args.snapshot, dtype={"review_id": str})
+        sheet, key = draw_sample(snapshot, n=args.n, seed=args.seed)
+        args.out.mkdir(parents=True, exist_ok=True)
+        sheet_path = args.out / f"{args.snapshot.stem}-sheet.csv"
+        key_path = args.out / f"{args.snapshot.stem}-key.csv"
+        sheet.to_csv(sheet_path, index=False)
+        key.to_csv(key_path, index=False)
+        themes = ", ".join(load_pack(args.pack).themes)
+        print(f"Wrote {len(sheet)} reviews to {sheet_path}")
+        print(f"Fill in human_theme with one of: {themes}")
+        print(f"The tool's labels are in {key_path}. Don't open it until you're done.")
+        return 0
+
+    if args.command == "agree":
+        key_path = args.key or args.sheet.with_name(args.sheet.name.replace("-sheet", "-key"))
+        sheet = pd.read_csv(args.sheet, dtype={"review_id": str})
+        key = pd.read_csv(key_path, dtype={"review_id": str})
+        report = render_agreement(agreement(sheet, key, list(load_pack(args.pack).themes)))
+        if args.out:
+            args.out.write_text(report)
+            print(f"Report written to {args.out}")
+        else:
+            print(report)
         return 0
 
     if args.command == "discover":

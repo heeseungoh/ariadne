@@ -164,6 +164,23 @@ checked before anything is labelled, and the report only claims what the sample 
 The two cut-offs are set per pack (`min_reviews`, `min_sample`). `ariadne-pmm fetch` prints this
 check for free, so you can see it before spending API credits.
 
+## Checking the labels yourself
+
+The keyword labeller is rough, so you can measure how rough. Label a random sample by hand, then
+compare:
+
+```bash
+# 1. Draw 100 labelled reviews from a run. Your sheet has an empty human_theme column;
+#    the tool's labels go to a separate key file so you label blind.
+ariadne-pmm sample data/snapshots/weakness_map-2026-11-18.csv --n 100
+
+# 2. Fill in human_theme for each review in data/accuracy/...-sheet.csv, then:
+ariadne-pmm agree data/accuracy/weakness_map-2026-11-18-sheet.csv --out accuracy.md
+```
+
+The report gives overall agreement, precision and recall per theme, and the most common mix-ups.
+The same seed always draws the same sample, so a second person can label the same reviews.
+
 ## Limits
 
 - Reviews come from existing users with strong opinions. They say little about people who never
@@ -178,7 +195,8 @@ check for free, so you can see it before spending API credits.
 ## Roadmap
 
 - [x] First case studies: BeReal (test run) and Apple Music
-- [ ] Accuracy check: agreement with 100 hand-labelled reviews, for both labellers
+- [x] Accuracy check tooling (`sample` and `agree`)
+- [ ] Run the accuracy check: label 100 Apple Music reviews by hand
 - [ ] `messaging_miner` pack: what happy users say, in their words
 - [ ] Compare two snapshots over time
 - [ ] Streamlit demo
