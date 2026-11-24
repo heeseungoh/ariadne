@@ -55,7 +55,7 @@ def test_fetch_reviews_stops_at_first_empty_page_after_retrying_it():
     session = FakeSession()
     reviews = fetch_reviews("123", "Demo", session=session, sleep=no_sleep)
     assert len(reviews) == 2
-    assert session.calls == 4  # page 1, then page 2 tried 3 times
+    assert session.calls == 5  # page 1, then page 2 tried 4 times
 
 
 class FlakySession:
@@ -94,3 +94,9 @@ class BrokenSession:
 
 def test_fetch_reviews_survives_network_errors():
     assert fetch_reviews("123", "Demo", session=BrokenSession(), sleep=no_sleep) == []
+
+
+def test_retries_wait_longer_each_time():
+    waits = []
+    fetch_reviews("123", "Demo", session=BrokenSession(), sleep=waits.append)
+    assert waits == [10.0, 20.0, 40.0]
