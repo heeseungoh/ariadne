@@ -56,17 +56,6 @@ Music is at 6%. So against YouTube Music, "it just works" is a better angle than
 About 17-23% of each app's complaints didn't match any theme, and some labels are wrong. That's
 why every number in the report has the real reviews under it. Check those before quoting a number.
 
-### BeReal (first test run)
-
-[Report](case-studies/bereal/weakness_map-2026-11-15.md)
-
-BeReal was the first run, mostly to see if the tool worked end to end on real data. A couple of
-things showed up: Instagram's top complaint was account and login problems (22% of 314), and
-Locket Widget's was bugs (27% of 49). But the bigger lesson was about the tool. 31-64% of
-complaints per app didn't match any theme, and some apps had too few reviews for a percentage to
-mean anything. That's what led to the small-sample rules and the better keyword rules I used for
-Apple Music.
-
 ## How it works
 
 1. **Find competitors.** Type one app. Ariadne searches the App Store with its name, keywords
@@ -105,16 +94,16 @@ export ANTHROPIC_API_KEY=your-key
 ariadne-pmm packs
 
 # See who Ariadne picks as competitors (free, no API key needed)
-ariadne-pmm discover "BeReal" --keyword "photo sharing" --top 5
+ariadne-pmm discover "Apple Music" --keyword "music streaming" --top 5
 
 # Drop an app that isn't a real competitor; the next best one moves up
 ariadne-pmm discover "Apple Music" --keyword "music streaming" --exclude "Shazam"
 
 # Pull the reviews and see counts by star rating (free, no API key needed)
-ariadne-pmm fetch --seed "BeReal" --keyword "photo sharing" --top 5
+ariadne-pmm fetch --seed "Apple Music" --keyword "music streaming" --top 5
 
 # Run the pack on the app plus its top 5 competitors
-ariadne-pmm run weakness_map --seed "BeReal" --keyword "photo sharing" --top 5
+ariadne-pmm run weakness_map --seed "Apple Music" --keyword "music streaming" --top 5
 
 # Or name the apps yourself
 ariadne-pmm run weakness_map --app "1111111111:Competitor A" --app "2222222222:Competitor B"
@@ -150,7 +139,7 @@ The report states which labeller was used. Start with `keywords` to see the shap
 for free, then use `claude` for numbers you plan to present.
 
 ```bash
-ariadne-pmm run weakness_map --seed "BeReal" --keyword "photo sharing" --tagger keywords
+ariadne-pmm run weakness_map --seed "Apple Music" --keyword "music streaming" --tagger keywords
 ```
 
 ## Small samples
@@ -210,7 +199,7 @@ about 95% confidence). For example: is Apple Music's redesign backlash fading, o
 
 ## Roadmap
 
-- [x] First case studies: BeReal (test run) and Apple Music
+- [x] First case study: Apple Music
 - [x] Accuracy check tooling (`sample` and `agree`)
 - [ ] Run the accuracy check: label 100 Apple Music reviews by hand
 - [x] `messaging_miner` pack: what happy users say, in their words
